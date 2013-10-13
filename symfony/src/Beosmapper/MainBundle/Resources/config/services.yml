@@ -1,0 +1,7 @@
+parameters:
+#    beosmapper_main.example.class: Beosmapper\MainBundle\Example
+
+services:
+#    beosmapper_main.example:
+#        class: %beosmapper_main.example.class%
+#        arguments: [@service_id, "plain_value", %parameter%]

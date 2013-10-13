@@ -1,3 +1,7 @@
 beosmapper_main_homepage:
     pattern:  /hello/{name}
     defaults: { _controller: BeosmapperMainBundle:Default:index }
+
+index:
+    path:	/home
+    defaults: { _controller: BeosmapperMainBundle:Home:index }

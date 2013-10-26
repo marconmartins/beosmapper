@@ -1,4 +1,4 @@
-beosmappermain:
-    resource: "@beosmappermainBundle/Resources/config/routing.yml"
+beosmapper_main:
+    resource: "@BeosmapperMainBundle/Resources/config/routing.yml"
     prefix:   /
 

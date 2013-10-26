@@ -1,13 +1,13 @@
 <?php
 
-namespace beosmapper\mainBundle\Controller;
+namespace Beosmapper\MainBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
 class DefaultController extends Controller
 {
-    public function indexAction()
+    public function indexAction($name)
     {
-        return $this->render('beosmappermainBundle:Default:template.html.php');
+        return $this->render('BeosmapperMainBundle:Default:index.html.twig', array('name' => $name));
     }
 }

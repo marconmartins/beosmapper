@@ -1,6 +1,6 @@
 <?php
 
-namespace beosmapper\mainBundle\Tests\Controller;
+namespace Beosmapper\MainBundle\Tests\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 

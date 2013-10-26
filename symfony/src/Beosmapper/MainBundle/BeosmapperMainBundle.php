@@ -1,9 +1,9 @@
 <?php
 
-namespace beosmapper\mainBundle;
+namespace Beosmapper\MainBundle;
 
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 
-class beosmappermainBundle extends Bundle
+class BeosmapperMainBundle extends Bundle
 {
 }

@@ -61,18 +61,25 @@ app.controller( "MainController", function( $scope, $http ) {
 
 			//console.log( data );
 
-			console.log( x2js.xml_str2json( data ) );
-
+			//console.log( x2js.xml_str2json( data ) );
+			var allmarkers = x2js.xml_str2json( data );
+			for ( marker=0; marker < allmarkers.osm.node.length; marker++ )
+				{
+				console.log( allmarkers.osm.node[marker] );
+				var coords = new OpenLayers.LonLat( allmarkers.osm.node[marker].lon, allmarkers.osm.node[marker].lat );
+				markers.addMarker( new OpenLayers.Marker( coords ) );
+				}
+				
+			
 		}).
+		
 		error( function( data, status, headers, config ) {
 
 			console.log( 'error' );
 
 		});
 
-		var coords = new OpenLayers.LonLat( "6220211", "170892" );
-
-		markers.addMarker( new OpenLayers.Marker( coords ) );
+		
 
 	};
 

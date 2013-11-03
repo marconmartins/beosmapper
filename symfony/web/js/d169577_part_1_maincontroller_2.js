@@ -1,4 +1,3 @@
-var app = angular.module( "BeosmapperApp", [] );
 app.controller( "MainController", function( $scope, $http ) {
 
 	$scope.understand = "I now understand how the scope works!";

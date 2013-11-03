@@ -4,7 +4,7 @@ app.controller( "MainController", function( $scope, $http ) {
 
 	osm_feature = "tourism:hotels";
 
-	var map, layer, markers;
+	var map, layer, markers, markerIcon;
 
 	var x2js = new X2JS();
 
@@ -15,34 +15,26 @@ app.controller( "MainController", function( $scope, $http ) {
 	 */
 	initMap = function() {
 
-		map = new OpenLayers.Map( "map", { theme: false } );
+		map = new OpenLayers.Map( "map", { theme: '/css/theme/default/style.css' } );
 
 		layer = new OpenLayers.Layer.OSM( "Simple OSM Map" );
 
 		map.addLayer( layer );
 
-		markers = new OpenLayers.Layer.Markers( 'Building entrances' );
+		markers = new OpenLayers.Layer.Markers( "Building entrances" );
 
 		map.addLayer( markers );
 
-		map.setCenter(
-			new OpenLayers.LonLat( -71.147, 42.472 ).transform(
-			new OpenLayers.Projection( "EPSG:4326" ),
-			map.getProjectionObject()
-			), 3
-		);
+        var fromProjection = new OpenLayers.Projection( "EPSG:4326" );   // Transform from WGS 1984
+        var toProjection = new OpenLayers.Projection( "EPSG:900913" ); // to Spherical Mercator Projection
+        var center = new OpenLayers.LonLat( 24.95154, 60.17023 ).transform( fromProjection, toProjection );
+        var zoomLevel = 13;
 
-	};
+        map.setCenter( center, zoomLevel );
 
-
-	//addMarker = function( lonlat ) {
-
-		//markers.addMarker( new OpenLayers.Marker( lonlat ) );
-
-	//};
-
-
-	clearMarkers = function() {
+		// var size = new OpenLayers.Size(21,25);
+		// var offset = new OpenLayers.Pixel(-(size.w/2), -size.h);
+		// markerIcon = new OpenLayers.Icon('http://www.openlayers.org/dev/img/marker.png', size, offset);
 
 	};
 
@@ -54,32 +46,31 @@ app.controller( "MainController", function( $scope, $http ) {
 	 */
 	getOSMFeatures = function() {
 
-		var osm_url = "http://www.overpass-api.de/api/xapi?*[building=entrance][bbox=24.64233,60.11141,25.06531,60.27796]";
+		var osmUrl = "http://www.overpass-api.de/api/xapi?*[building=entrance][bbox=24.93587,60.15671,24.94755,60.16218]";
 
-		$http( { method: 'GET', url: osm_url } ).
+		$http( { method: 'GET', url: osmUrl } ).
 		success( function( data, status, headers, config ) {
 
-			//console.log( data );
+			var jsonData = x2js.xml_str2json( data ); // convert XML response into json
 
-			//console.log( x2js.xml_str2json( data ) );
-			var allmarkers = x2js.xml_str2json( data );
-			for ( marker=0; marker < allmarkers.osm.node.length; marker++ )
-				{
-				console.log( allmarkers.osm.node[marker] );
-				var coords = new OpenLayers.LonLat( allmarkers.osm.node[marker].lon, allmarkers.osm.node[marker].lat );
-				markers.addMarker( new OpenLayers.Marker( coords ) );
-				}
-				
-			
+			// Add markers to OpenLayers
+			angular.forEach ( jsonData.osm.node, function( n ) {
+
+				var nodeCoordinates = new OpenLayers.LonLat( n.lon, n.lat );
+
+
+				markers.addMarker( new OpenLayers.Marker( nodeCoordinates ) );
+
+			});
+
+			console.log(markers);
+
 		}).
-		
 		error( function( data, status, headers, config ) {
 
-			console.log( 'error' );
+			console.log( 'Error' );
 
 		});
-
-		
 
 	};
 

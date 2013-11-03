@@ -29,7 +29,18 @@
 
 		<script type="text/javascript" src="<?php echo $view->escape( $url ); ?>"></script>
 
-	<?php } ?>
+	<?php }
+
+	/*$ol_css = $view['assetic']->stylesheets( array('@BeosmapperMainBundle/Resources/public/css/theme/default/style.css'), array('cssrewrite') ); ?>
+
+	<?php foreach ( $ol_css as $url) { ?>
+
+    	<link rel="stylesheet" href="<?php echo $view->escape($url) ?>" />
+
+	<?php }*/ ?>
+
+	<link rel="stylesheet" href="/css/theme/default/style.css" />
+
 
 </head>
 <body>
@@ -42,7 +53,7 @@
 		
 		<p>This is a project by **Group 2** for the course GIS Application Development - Aalto University</p>
 
-		<div id="map" style="height: 400px; width: 400px;"></div>
+		<div id="map" style="height: 500px; width: 500px;"></div>
 
 		<?php $view['slots']->output('_content') ?>
 

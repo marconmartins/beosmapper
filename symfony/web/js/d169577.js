@@ -12,6 +12,9 @@ app.controller( "MainController", function( $scope, $http, olHandler, osmData ) 
 
 	$scope.pageTitle = "Beosmapper";
 
+	/**
+	 * App initialization
+	 **/
 	olHandler.initOSM( 'map', '/css/theme/default/style.css' );
 
 	features = osmData.getFeatures({
@@ -20,14 +23,22 @@ app.controller( "MainController", function( $scope, $http, olHandler, osmData ) 
 			v: 'entrance'
 		},
 		bbox: '24.93587,60.15671,24.94755,60.16218'
-	});
-
-	features.then( function( features ) {
+	}).then( function( features ) {
 
 		olHandler.addMarkers( features );
 
 	}, function( status ) {
 		// Error
 	});
+
+
+	/**
+	 * User bound functions
+	 **/
+	$scope.locate = function() {
+
+		olHandler.getUserLocation();
+
+	};
 
 });

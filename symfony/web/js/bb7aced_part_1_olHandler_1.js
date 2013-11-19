@@ -84,8 +84,48 @@ app.factory( 'olHandler', function() {
 
 			});
 
+		},
+
+
+		/**
+		 * Gets the current user location using Geolocation and centers the user in that specific location
+		 *
+		 * @returns void
+		 */
+		getUserLocation: function() {
+
+			var fromProjection	= new OpenLayers.Projection( 'EPSG:4326' );
+			var toProjection	= new OpenLayers.Projection( olObj.map.getProjection() );
+
+			navigator.geolocation.getCurrentPosition( function( position ) {
+
+				var currentLonLat = new OpenLayers.LonLat( position.coords.longitude, position.coords.latitude ).transform( fromProjection, toProjection );
+
+				olObj.map.setCenter( currentLonLat, 16 );
+
+			});
+
 		}
+
 
 	};
 
 });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

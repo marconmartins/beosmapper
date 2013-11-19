@@ -64,6 +64,8 @@
 		
 		<p>This is a project by **Group 2** for the course GIS Application Development - Aalto University</p>
 
+		<a href="" ng-click="locate()">Center map on my current location</a>
+
 		<div id="map" style="height: 500px; width: 500px;"></div>
 
 		<?php $view['slots']->output('_content') ?>

@@ -42,10 +42,17 @@
 	<![endif]-->
 
 
-	<?php // Include Stylesheets
-	$stylesheets = $view['assetic']->stylesheets( array('@BeosmapperMainBundle/Resources/public/css/*') ); ?>
+	<?php // Include CSS libraries
+	$css_libraries = $view['assetic']->stylesheets( array('@BeosmapperMainBundle/Resources/public/css/lib/*') ); ?>
 
-	<?php foreach ( $stylesheets as $url ) { ?>
+	<?php foreach ( $css_libraries as $url ) { ?>
+		<link rel="stylesheet" href="<?php echo $view->escape($url) ?>" />
+	<?php }
+
+	// Include app stylesheets
+	$css_app = $view['assetic']->stylesheets( array('@BeosmapperMainBundle/Resources/public/css/*') ); ?>
+
+	<?php foreach ( $css_app as $url ) { ?>
 		<link rel="stylesheet" href="<?php echo $view->escape($url) ?>" />
 	<?php }
 

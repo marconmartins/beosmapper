@@ -64,24 +64,62 @@
 <body ng-cloak >
 
 	<div id="content" ng-controller="MainController">
-
-		<h1>{{ pageTitle }}</h1>
-
-		<p>Beosmapper is an extension to <a href="http://blindsquare.com/">BlindSquare</a> that indicates the building entrances and traffic lights for blind pedestrians.</p>
+	<?php $view['slots']->output('_content') ?>
+	
+    <div class="container">
+		<div class="row">
+			<div class="col-lg-16">
+			<div class="well text-center">
+				<h1>Welcome to Beosmapper!</h1>
+				<h3>Beosmapper is an extension to <a href="http://blindsquare.com/">BlindSquare</a> that indicates the building entrances and traffic lights for blind pedestrians.</h3>   
+			</div>
+			</div>
+		</div>
+      <div class="row">
+        <div class="col-lg-8">
+			<p></p>
+			<div id="map" style="height: 300px; width: 90%; "></div>
+			<p></p>
+			<a class="btn btn-primary btn-lg" href="" ng-click="locate()">Center map on my current location</a>
+        </div>
+		<hr>
 		
-		<p>This is a project by **Group 2** for the course GIS Application Development - Aalto University</p>
+        <div class="col-lg-4">
+			<h3>Add new entry</h3>
+			<div class="btn-group">
+				<button type="button" class="btn btn-danger">1. Choose entry type</button>
+				<button type="button" class="btn btn-danger dropdown-toggle" data-toggle="dropdown">
+					<span class="caret"></span>
+					<span class="sr-only">Toggle Dropdown</span>
+				</button>
+				<ul class="dropdown-menu" role="menu">
+					<li><a href="#">Entrance</a></li>
+					<li><a href="#">Traffic light</a></li>
+					<li><a href="#">Stairs</a></li>
+				</ul>
+			</div>
+			<hr>
+			<div class="input-group">
+				<span class="input-group-addon">2. Describe entry</span>
+				<input type="text" class="form-control" placeholder="Username">
+			</div>
+        </div>
+      </div>
+	  <p></p>
+      <div class="row">
+        <div class="col-lg-16">
+          <div class="well text-center">
+            <h6>This is a project by **Group 2** for the course GIS Application Development - Aalto University</h6>
+          </div>
+        </div>
+      </div>  
+		
+		
+			<!-- ng-model = two-way data binding - ->
+			<input type='text' ng-model='inputValue' />
 
-		<a href="" ng-click="locate()">Center map on my current location</a>
-
-		<div id="map" style="height: 500px; width: 500px;"></div>
-
-		<?php $view['slots']->output('_content') ?>
-
-		<!-- ng-model = two-way data binding - ->
-		<input type='text' ng-model='inputValue' />
-
-		{{ inputValue }}
-
+			{{ inputValue }}
+		
 	</div>
 
 </body>

@@ -7,57 +7,26 @@
 
 	<link rel="shortcut icon" href="<?php echo $view['assets']->getUrl('favicon.ico') ?>" />
 
+	<?php // Javascript libraries ?>
+	<script type="text/javascript" src="/js/lib/xml2json.js"></script>
+	<script type="text/javascript" src="/js/lib/OpenLayers.js"></script>
+	<script type="text/javascript" src="/js/lib/angular.js"></script>
 
-	<?php // Include Javascript libraries 
-	$js_libraries = $view['assetic']->javascripts( array( '@BeosmapperMainBundle/Resources/public/js/lib/*' ) ); ?>
+	<?php // Application (controller + services) ?>
+	<script type="text/javascript" src="/js/app.js"></script>
+	<script type="text/javascript" src="/js/maincontroller.js"></script>
 
-	<?php foreach ( $js_libraries as $url ) { ?>
-		<script type="text/javascript" src="<?php echo $view->escape( $url ); ?>"></script>
-	<?php }
+	<script type="text/javascript" src="/js/services/olHandler.js"></script>
+	<script type="text/javascript" src="/js/services/osmData.js"></script>
 
-
-	// Include Javascript files 
-	$js_app = $view['assetic']->javascripts( array( '@BeosmapperMainBundle/Resources/public/js/*' ) ); ?>
-
-	<?php foreach ( $js_app as $url ) { ?>
-		<script type="text/javascript" src="<?php echo $view->escape( $url ); ?>"></script>
-	<?php }
-
-	// Include polyfills for old IE versions
-	$appServices = $view['assetic']->javascripts( array( '@BeosmapperMainBundle/Resources/public/js/services/*' ) ); ?>
-
-	<?php foreach ( $appServices as $url ) { ?>
-		<script type="text/javascript" src="<?php echo $view->escape( $url ); ?>"></script>
-	<?php }
-
-
-
-	// Include polyfills for old IE versions
-	$js_app = $view['assetic']->javascripts( array( '@BeosmapperMainBundle/Resources/public/js/polyfills/*' ) ); ?>
-
+	<?php // Include polyfills for old IE versions ?>
 	<!--[if lte IE 8]>
-	<?php foreach ( $js_app as $url ) { ?>
-		<script type="text/javascript" src="<?php echo $view->escape( $url ); ?>"></script>
-	<?php } ?>
+	<script type="text/javascript" src="/js/polyfills/json2.js"></script>
 	<![endif]-->
 
-
-	<?php // Include CSS libraries
-	$css_libraries = $view['assetic']->stylesheets( array('@BeosmapperMainBundle/Resources/public/css/lib/*') ); ?>
-
-	<?php foreach ( $css_libraries as $url ) { ?>
-		<link rel="stylesheet" href="<?php echo $view->escape($url) ?>" />
-	<?php }
-
-	// Include app stylesheets
-	$css_app = $view['assetic']->stylesheets( array('@BeosmapperMainBundle/Resources/public/css/*') ); ?>
-
-	<?php foreach ( $css_app as $url ) { ?>
-		<link rel="stylesheet" href="<?php echo $view->escape($url) ?>" />
-	<?php }
-
-
-	// OpenLayers default theme file ?>
+	<?php // Stylesheets ?>
+	<link rel="stylesheet" href="/css/lib/bootstrap.css" />
+	<link rel="stylesheet" href="/css/app.css" />
 	<link rel="stylesheet" href="/css/theme/default/style.css" />
 
 </head>

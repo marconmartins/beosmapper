@@ -8,16 +8,17 @@
 	<link rel="shortcut icon" href="<?php echo $view['assets']->getUrl('favicon.ico') ?>" />
 
 	<?php // Javascript libraries ?>
-	<script type="text/javascript" src="//<?php echo $this->container->get('router')->getContext()->getHost(); ?>/js/lib/xml2json.js"></script>
-	<script type="text/javascript" src="//<?php echo $this->container->get('router')->getContext()->getHost(); ?>//js/lib/OpenLayers.js"></script>
-	<script type="text/javascript" src="//<?php echo $this->container->get('router')->getContext()->getHost(); ?>//js/lib/angular.js"></script>
+	<script type="text/javascript" src="/js/lib/xml2json.js"></script>
+	<script type="text/javascript" src="/js/lib/OpenLayers.js"></script>
+	<script type="text/javascript" src="/js/lib/angular.js"></script>
+	<script type="text/javascript" src="/js/lib/ui-bootstrap-tpls-0.7.0.js"></script>
 
 	<?php // Application (controller + services) ?>
-	<script type="text/javascript" src="//<?php echo $this->container->get('router')->getContext()->getHost(); ?>//js/app.js"></script>
-	<script type="text/javascript" src="//<?php echo $this->container->get('router')->getContext()->getHost(); ?>//js/maincontroller.js"></script>
+	<script type="text/javascript" src="/js/app.js"></script>
+	<script type="text/javascript" src="/js/maincontroller.js"></script>
 
-	<script type="text/javascript" src="//<?php echo $this->container->get('router')->getContext()->getHost(); ?>//js/services/olHandler.js"></script>
-	<script type="text/javascript" src="//<?php echo $this->container->get('router')->getContext()->getHost(); ?>//js/services/osmData.js"></script>
+	<script type="text/javascript" src="/js/services/olHandler.js"></script>
+	<script type="text/javascript" src="/js/services/osmData.js"></script>
 
 	<?php // Include polyfills for old IE versions ?>
 	<!--[if lte IE 8]>
@@ -25,19 +26,16 @@
 	<![endif]-->
 
 	<?php // Stylesheets ?>
-	<link rel="stylesheet" href="//<?php echo $this->container->get('router')->getContext()->getHost(); ?>//css/lib/bootstrap.css" />
-	<link rel="stylesheet" href="//<?php echo $this->container->get('router')->getContext()->getHost(); ?>//css/app.css" />
-	<link rel="stylesheet" href="//<?php echo $this->container->get('router')->getContext()->getHost(); ?>//css/theme/default/style.css" />
+	<link rel="stylesheet" href="/css/lib/bootstrap.css" />
+	<link rel="stylesheet" href="/css/app.css" />
+	<link rel="stylesheet" href="/css/theme/default/style.css" />
 
 </head>
 <body ng-cloak >
 
 	<div id="content" ng-controller="MainController">
 	<?php $view['slots']->output('_content') ?>
-	<?php 
 
-
-	?>
     <div class="container">
 		<div class="row">
 			<div class="col-lg-16">
@@ -52,7 +50,7 @@
 			<p></p>
 			<div id="map" style="height: 300px; width: 90%; "></div>
 			<p></p>
-			<a class="btn btn-primary btn-lg" href="" ng-click="locate()">Center map on my current location</a>
+			<a class="btn btn-primary btn-lg" href="" ng-click="locate()">Show my current location</a>
         </div>
 		<hr>
 		

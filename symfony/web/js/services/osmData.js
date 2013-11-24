@@ -47,25 +47,7 @@ app.factory( 'osmData', function( $http, $q ) {
 		// TODO: Add Feature, not sure will be fully done or through PHP
 		addFeature: function( feature ) {
 
-			// var deferred = $q.defer();
-
-			// $http( { method: 'GET', url: osmUrl } ).
-			//	success( function( data, status, headers, config ) {
-
-			//		var x2js = new X2JS();
-
-			//		var jsonData = x2js.xml_str2json( data ); // convert XML response into json
-
-			//		deferred.resolve( jsonData );
-
-			//	}).
-			//	error( function( data, status, headers, config ) {
-
-			//		deferred.reject( status );
-
-			//	});
-
-			// return deferred.promise;
+			console.log( feature );
 
 		}
 

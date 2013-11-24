@@ -16,6 +16,8 @@ app.controller( "MainController", function( $scope, $http, olHandler, osmData ) 
 	 **/
 	olHandler.initOSM( 'map', '/css/theme/default/style.css' );
 
+	$scope.userClick = olHandler.initClick( $scope );
+
 	features = osmData.getFeatures({
 		tag: {
 			k: 'building',
@@ -37,6 +39,17 @@ app.controller( "MainController", function( $scope, $http, olHandler, osmData ) 
 	$scope.locate = function() {
 
 		olHandler.getUserLocation();
+
+	};
+
+
+	/**
+	 * Callback for OpenLayers click
+	 **/
+	$scope.olHandlerClickCallback = function( e ) {
+
+		// TODO: Add all the tags, login info?!?, into the object and attach it to a submit
+		osmData.addFeature( e );
 
 	};
 

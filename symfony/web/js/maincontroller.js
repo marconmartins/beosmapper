@@ -14,7 +14,7 @@ app.controller( "MainController", function( $scope, $http, olHandler, osmData ) 
 	/**
 	 * App initialization
 	 **/
-	olHandler.initOSM( 'map', '/css/theme/default/style.css' );
+	olHandler.initOSM( 'map', '../css/theme/default/style.css' );
 
 	$scope.userClick = olHandler.initClick( $scope );
 

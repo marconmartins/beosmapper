@@ -49,15 +49,14 @@ app.factory( 'olHandler', function() {
 
 		});
 
-
 		// Center the map
 		olObj.map.setCenter( new OpenLayers.LonLat( 2777592, 8437735 ), olObj.zoom );
 
 		// Set marker icons
 		var size = new OpenLayers.Size( 21, 25 );
 		var offset = new OpenLayers.Pixel( -( size.w / 2 ), -size.h );
-		olObj.markerIcon.features = new OpenLayers.Icon( '/img/marker-green.png', size, offset );
-		olObj.markerIcon.userInput = new OpenLayers.Icon( '/img/marker.png', size, offset );
+		olObj.markerIcon.features = new OpenLayers.Icon( '../img/marker-green.png', size, offset );
+		olObj.markerIcon.userInput = new OpenLayers.Icon( '../img/marker.png', size, offset );
 
 	};
 
@@ -170,9 +169,7 @@ app.factory( 'olHandler', function() {
 
 
 
-
 	return olHandler;
-
 });
 
 

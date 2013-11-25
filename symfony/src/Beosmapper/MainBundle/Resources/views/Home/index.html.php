@@ -5,30 +5,31 @@
 
 	<title><?php $view['slots']->output('title', 'Beosmapper') ?></title>
 
-	<link rel="shortcut icon" href="<?php echo $view['assets']->getUrl('favicon.ico') ?>" />
+	<link rel="shortcut icon" href="<?php echo $view['assets']->getUrl( 'favicon.ico' ) ?>" />
 
 	<?php // Javascript libraries ?>
-	<script type="text/javascript" src="/js/lib/xml2json.js"></script>
-	<script type="text/javascript" src="/js/lib/OpenLayers.js"></script>
-	<script type="text/javascript" src="/js/lib/angular.js"></script>
-	<script type="text/javascript" src="/js/lib/ui-bootstrap-tpls-0.7.0.js"></script>
+	<script type="text/javascript" src="<?php echo $view['assets']->getUrl( 'js/lib/xml2json.js' ); ?>"></script>
+	<script type="text/javascript" src="<?php echo $view['assets']->getUrl( 'js/lib/OpenLayers.js'); ?>"></script>
+	<script type="text/javascript" src="<?php echo $view['assets']->getUrl( 'js/lib/angular.js' ); ?>"></script>
+	<script type="text/javascript" src="<?php echo $view['assets']->getUrl( 'js/lib/ui-bootstrap-tpls-0.7.0.js' ); ?>"></script>
 
 	<?php // Application (controller + services) ?>
-	<script type="text/javascript" src="/js/app.js"></script>
-	<script type="text/javascript" src="/js/maincontroller.js"></script>
+	<script type="text/javascript" src="<?php echo $view['assets']->getUrl( 'js/app.js' ); ?>"></script>
+	<script type="text/javascript" src="<?php echo $view['assets']->getUrl( 'js/maincontroller.js' ); ?>"></script>
 
-	<script type="text/javascript" src="/js/services/olHandler.js"></script>
-	<script type="text/javascript" src="/js/services/osmData.js"></script>
+	<script type="text/javascript" src="<?php echo $view['assets']->getUrl( 'js/services/olHandler.js' ); ?>"></script>
+	<script type="text/javascript" src="<?php echo $view['assets']->getUrl( 'js/services/osmData.js' ); ?>"></script>
 
 	<?php // Include polyfills for old IE versions ?>
 	<!--[if lte IE 8]>
-	<script type="text/javascript" src="/js/polyfills/json2.js"></script>
+
+	<script type="text/javascript" src="<?php echo $view['assets']->getUrl( 'js/polyfills/json2.js' ); ?>"></script>
 	<![endif]-->
 
 	<?php // Stylesheets ?>
-	<link rel="stylesheet" href="/css/lib/bootstrap.css" />
-	<link rel="stylesheet" href="/css/app.css" />
-	<link rel="stylesheet" href="/css/theme/default/style.css" />
+	<link rel="stylesheet" href="<?php echo $view['assets']->getUrl( 'css/lib/bootstrap.css' ); ?>" />
+	<link rel="stylesheet" href="<?php echo $view['assets']->getUrl( 'css/app.css' ); ?>" />
+	<link rel="stylesheet" href="<?php echo $view['assets']->getUrl( 'css/theme/default/style.css' ); ?>" />
 
 </head>
 <body ng-cloak >

@@ -27,9 +27,9 @@
 	<![endif]-->
 
 	<?php // Stylesheets ?>
+	<link rel="stylesheet" href="<?php echo $view['assets']->getUrl( 'css/theme/default/style.css' ); ?>" />
 	<link rel="stylesheet" href="<?php echo $view['assets']->getUrl( 'css/lib/bootstrap.css' ); ?>" />
 	<link rel="stylesheet" href="<?php echo $view['assets']->getUrl( 'css/app.css' ); ?>" />
-	<link rel="stylesheet" href="<?php echo $view['assets']->getUrl( 'css/theme/default/style.css' ); ?>" />
 
 </head>
 <body ng-cloak >
@@ -52,47 +52,72 @@
 			<div id="map" style="height: 300px; width: 90%; "></div>
 			<p></p>
 			<a class="btn btn-primary btn-lg" href="" ng-click="locate()">Show my current location</a>
-        </div>
+		</div>
+
 		<hr>
 		
-        <div class="col-lg-4">
+		<div class="col-lg-4">
+
 			<h3>Add new entry</h3>
+
 			<div class="btn-group">
+
 				<button type="button" class="btn btn-danger">1. Choose entry type</button>
+
 				<button type="button" class="btn btn-danger dropdown-toggle" data-toggle="dropdown">
+
 					<span class="caret"></span>
+
 					<span class="sr-only">Toggle Dropdown</span>
+
 				</button>
 
 				<ul class="dropdown-menu" role="menu">
-					<li><a href="#">Entrance</a></li>
-					<li><a href="#">Traffic light</a></li>
-					<li><a href="#">Stairs</a></li>
-				</ul>
-			</div>
-			<hr>
-			<div class="input-group">
-				<span class="input-group-addon">2. Describe entry</span>
-				<input type="text" class="form-control" placeholder="Your description">
-			</div>
-        </div>
-      </div>
-	  <p></p>
-      <div class="row">
-        <div class="col-lg-16">
-          <div class="well text-center">
-            <h6>This is a project by **Group 2** for the course GIS Application Development - Aalto University</h6>
-          </div>
-        </div>
-      </div>  
-		
-		
-			<!-- ng-model = two-way data binding - ->
-			<input type='text' ng-model='inputValue' />
 
-			{{ inputValue }}
-		
+					<li><a href="#">Entrance</a></li>
+
+					<li><a href="#">Traffic light</a></li>
+
+					<li><a href="#">Stairs</a></li>
+
+				</ul>
+
+			</div>
+
+			<hr>
+
+			<div class="input-group">
+
+				<span class="input-group-addon">2. Describe entry</span>
+
+				<input type="text" class="form-control" placeholder="Your description" ng-model='entry.description' >
+
+			</div>
+
+			<hr>
+
+			<div class="input-group">
+				<button type="submit" class="btn btn-primary" ng-click='submitEntry()'>Submit</button>
+			</div>
+		</div>
 	</div>
+
+	<p></p>
+
+	<div class="row">
+		<div class="col-lg-16">
+			<div class="well text-center">
+				<h6>This is a project by **Group 2** for the course GIS Application Development - Aalto University</h6>
+			</div>
+		</div>
+	</div>
+				
+	<!-- ng-model = two-way data binding 
+	<input type='text' ng-model='inputValue' />
+
+	{{ inputValue }}
+		
+	</div>-->
 
 </body>
 </html>

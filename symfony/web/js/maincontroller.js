@@ -11,6 +11,24 @@ app.controller( "MainController", function( $scope, $http, olHandler, osmData ) 
 
 	$scope.pageTitle = "Beosmapper";
 
+
+	/**
+	 * User entry model
+	 **/
+	$scope.entry = {
+		tag: {
+			k: 'building',
+			v: 'entrance'
+		},
+		description: '',
+		location: '',
+		login: {
+			username: '',
+			password: ''
+		}
+	};
+
+
 	/**
 	 * App initialization
 	 **/
@@ -48,8 +66,14 @@ app.controller( "MainController", function( $scope, $http, olHandler, osmData ) 
 	 **/
 	$scope.olHandlerClickCallback = function( e ) {
 
-		// TODO: Add all the tags, login info?!?, into the object and attach it to a submit
-		osmData.addFeature( e );
+		$scope.entry.location = e;
+
+	};
+
+
+	$scope.submitEntry = function() {
+
+		osmData.addFeature( $scope.entry );
 
 	};
 

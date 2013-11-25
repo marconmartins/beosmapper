@@ -13,7 +13,7 @@ app.factory( 'olHandler', function() {
 		markerIcon: {},
 		projection: 'EPSG:900913',
 		center: '',
-		zoom: 13
+		zoom: 13,
 	};
 
 	var olHandler = {};

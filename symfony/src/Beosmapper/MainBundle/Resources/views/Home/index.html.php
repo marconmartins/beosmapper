@@ -83,6 +83,20 @@
 				</ul>
 
 			</div>
+			
+			<div class="dropdown">
+				<button class="btn dropdown-toggle sr-only" type="button" id="dropdownMenu1" data-toggle="dropdown">
+				Dropdown
+					<span class="caret"></span>
+				</button>
+				<ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
+					<li role="presentation"><a role="menuitem" tabindex="-1" href="#">Action</a></li>
+					<li role="presentation"><a role="menuitem" tabindex="-1" href="#">Another action</a></li>
+					<li role="presentation"><a role="menuitem" tabindex="-1" href="#">Something else here</a></li>
+					<li role="presentation" class="divider"></li>
+					<li role="presentation"><a role="menuitem" tabindex="-1" href="#">Separated link</a></li>
+				</ul>
+			</div>
 
 			<hr>
 
@@ -99,10 +113,19 @@
 			<div class="input-group">
 				<button type="submit" class="btn btn-primary" ng-click='submitEntry()'>Submit</button>
 			</div>
+			<h3>Registration</h3>
+			<div class="input-group">
+				<input type="text" class="form-control" placeholder="Username"><p></p>
+				<input type="text" class="form-control" placeholder="Password">
+			</div>
+			
+			<hr>
+
+			
+			
+			
 		</div>
 	</div>
-
-	<p></p>
 
 	<div class="row">
 		<div class="col-lg-16">

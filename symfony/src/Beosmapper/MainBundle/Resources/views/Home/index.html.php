@@ -115,8 +115,8 @@
 			</div>
 			<h3>Registration</h3>
 			<div class="input-group">
-				<input type="text" class="form-control" placeholder="Username"><p></p>
-				<input type="text" class="form-control" placeholder="Password">
+				<input type="text" class="form-control" placeholder="Username" ng-model='entry.login.username'><p></p>
+				<input type="text" class="form-control" placeholder="Password" ng-model='entry.login.password'>
 			</div>
 			
 			<hr>

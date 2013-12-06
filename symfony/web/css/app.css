@@ -8,15 +8,45 @@
 
 /*  */
 body {
-	font-family: helvetica, arial, sans-serif;
-	font-size: 62.5%;
+	font-family: Helvetica, arial, sans-serif;
 }
+
+h3 {
+	margin-bottom: 20px;
+}
+
+label {
+	font-size: 0.9em;
+}
+
+.form-group,
+.input-group {
+	margin-bottom: 25px;
+}
+
+
 
 #content {
 	font-size: 1.2em;
 	width: 100%;
 }
 
+#submission-area {
+	margin-bottom: 50px;
+}
+
+#map-block a {
+	margin-top: 10px;
+}
+
+
+/* OpenLayers */
+#map.olMap {
+	width: 100%;
+	height: 350px;
+}
+
 .olControlAttribution {
 	bottom: 0;
+	font-size: 0.7em;
 }

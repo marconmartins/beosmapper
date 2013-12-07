@@ -68,9 +68,9 @@
 		
 		<div id="information-block" class="col-xs-4">
 			Help blind people - add your data in few steps!<p></p><p></p>
-			<h5><b>Step 1.</b> Once click on the map at the place where your object is situated</h5><p></p>
-			<h5><b>Step 2.</b> Click one more time on exact point that you want to describe</h5><p></p>
-			<h5><b>Step 3.</b> Add the description of your data:</h5><p></p>
+			<h5><b>Step 1.</b> Click on the map at the location where your object is situated</h5><p></p>
+			<h5><b>Step 2.</b> Click one more time on the exact point that you want to describe</h5><p></p>
+			<h5><b>Step 3.</b> Add the description of your entry:</h5><p></p>
 
 			<div class="form-group">
 		
@@ -100,7 +100,7 @@
 
 			<div class="form-group">
 
-				<h5><b>Step 4.</b> Add your OpenStreetMap Login</h5>
+				<h5><b>Step 4.</b> Add your OpenStreetMap Login information</h5>
 				<p class="text-muted"><small><small>Don't have a OpenStreetMap account? Sign up <a href="https://www.openstreetmap.org/user/new" target="_blank">here</a>.</small></small></p>
 
 				<label class="sr-only" for="osm_password">OpenStreetMap Username</label>

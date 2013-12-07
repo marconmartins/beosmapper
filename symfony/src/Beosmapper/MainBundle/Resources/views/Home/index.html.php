@@ -39,36 +39,44 @@
 	<?php $view['slots']->output('_content') ?>
 
     <div class="container">
-		<div class="row">
-			<div class="col-lg-16">
-				<div class="well text-center">
+		
+			
+		<div class="text-center">
 
-					<h1>Welcome to Beosmapper!</h1>
+			<h2>Welcome to Beosmapper!</h2>
 
-					<h3>Beosmapper is an extension to <a href="http://blindsquare.com/">BlindSquare</a> that indicates the building entrances and traffic lights for blind pedestrians.</h3>   
+			<h4>Beosmapper is an extension to <a href="http://blindsquare.com/">BlindSquare</a> that indicates the building entrances, stairs and traffic lights for blind pedestrians</h4>   
 
-				</div>
-			</div>
 		</div>
+			
+		
 
       <div id="submission-area" class="row">
 
-        <div id="map-block" class="col-lg-8">
+        <div id="map-block" class="col-xs-8">
 
 			<div id="map"></div>
 
 			<a class="btn btn-primary btn-sm" href="" ng-click="locate()">Show my current location</a>
+			<hr></hr>
+			<div class="well text-center">
+				<h6>This is a project by **Group 2** for the course GIS Application Development - Aalto University</h6>
+			
 		</div>
-
-		<div id="information-block" class="col-lg-4">
-
-			<h3>Feature Information</h3>
+		</div>
+		
+		
+		<div id="information-block" class="col-xs-4">
+			Help blind people - add your data in few steps!<p></p><p></p>
+			<h5><b>Step 1.</b> Once click on the map at the place where your object is situated</h5><p></p>
+			<h5><b>Step 2.</b> Click one more time on exact point that you want to describe</h5><p></p>
+			<h5><b>Step 3.</b> Add the description of your data:</h5><p></p>
 
 			<div class="form-group">
 		
 				<select id="feature-type" class="form-control has-error">
 
-					<option value="">1. Choose the feature type</option>
+					<option value="">Choose the feature type</option>
 
 					<option value="entrance">Building Entrance</option>
 
@@ -83,7 +91,7 @@
 
 			<div class="input-group">
 
-				<span class="input-group-addon">2. Describe entry</span>
+				<span class="input-group-addon">Describe entry</span>
 
 				<input type="text" class="form-control has-error" placeholder="Your description" ng-model='entry.description' >
 
@@ -92,7 +100,7 @@
 
 			<div class="form-group">
 
-				<h5>3. Add your OpenStreetMap Login</h5>
+				<h5><b>Step 4.</b> Add your OpenStreetMap Login</h5>
 				<p class="text-muted"><small><small>Don't have a OpenStreetMap account? Sign up <a href="https://www.openstreetmap.org/user/new" target="_blank">here</a>.</small></small></p>
 
 				<label class="sr-only" for="osm_password">OpenStreetMap Username</label>
@@ -104,20 +112,16 @@
 				<p class="text-info"><small><small>Note: Your OpenStreetMap login information will not be stored, it will be used only to add the data.</small></small></p>
 
 			</div>
-			
-			<div class="input-group pull-right">
+			<h5><b>Step 5.</b> Submit your entry:</h5><p></p>
+			<div class="input-group pull-left">
 
-				<button type="submit" class="btn btn-default" ng-click='submitEntry()'>Submit</button>
+			<button type="submit" class="btn btn-default" ng-click='submitEntry()'>Submit</button>
 
 			</div>
-
-		</div>
-	</div>
-
-	<div class="row">
-		<div class="col-lg-16">
-			<div class="well text-center">
-				<h6>This is a project by **Group 2** for the course GIS Application Development - Aalto University</h6>
+			<p></p>
+			
+			<div class="text-right">
+			<b>Done!</b><p></p>
 			</div>
 		</div>
 	</div>

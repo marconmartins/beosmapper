@@ -48,7 +48,7 @@
 
 			<h2>Welcome to Beosmapper!</h2>
 
-			<h4>Beosmapper is an extension to <a href="http://blindsquare.com/">BlindSquare</a> that indicates the building entrances, stairs and traffic lights for blind pedestrians</h4>   
+			<h4>Beosmapper is an extension to <a href="http://blindsquare.com/" target="_blank">BlindSquare</a> that indicates the building entrances, stairs and traffic lights for blind pedestrians</h4>   
 
 		</div>
 			

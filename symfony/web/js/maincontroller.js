@@ -70,11 +70,17 @@ app.controller( "MainController", function( $scope, $http, olHandler, osmData ) 
 
 	};
 
-
 	$scope.submitEntry = function() {
 
 		osmData.addFeature( $scope.entry );
 
 	};
+
+
+	/**
+	* Bootstrap
+	**/
+	console.log( jQuery('body') );
+
 
 });

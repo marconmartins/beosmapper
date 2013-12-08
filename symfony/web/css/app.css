@@ -24,6 +24,9 @@ label {
 	margin-bottom: 25px;
 }
 
+.panel-group {
+	margin-bottom: 20px;
+}
 
 
 #content {
@@ -33,17 +36,18 @@ label {
 
 #submission-area {
 	margin-bottom: 50px;
+	padding-top: 50px;
 }
 
-#map-block a {
+#map-block a.locate {
 	margin-top: 10px;
 }
 
 
 /* OpenLayers */
 #map.olMap {
-	width: 100%;
 	height: 350px;
+	width: 100%;
 }
 
 .olControlAttribution {

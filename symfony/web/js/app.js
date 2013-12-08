@@ -1,1 +1,1 @@
-var app = angular.module( 'BeosmapperApp', ['ui.bootstrap'] );
+var app = angular.module( 'BeosmapperApp', [] );

@@ -11,7 +11,10 @@
 	<script type="text/javascript" src="<?php echo $view['assets']->getUrl( 'js/lib/xml2json.js' ); ?>"></script>
 	<script type="text/javascript" src="<?php echo $view['assets']->getUrl( 'js/lib/OpenLayers.js'); ?>"></script>
 	<script type="text/javascript" src="<?php echo $view['assets']->getUrl( 'js/lib/angular.js' ); ?>"></script>
-	<script type="text/javascript" src="<?php echo $view['assets']->getUrl( 'js/lib/ui-bootstrap-tpls-0.7.0.js' ); ?>"></script>
+	<script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
+	<script src="//netdna.bootstrapcdn.com/bootstrap/3.0.3/js/bootstrap.min.js"></script>
+
+
 
 	<?php // Application (controller + services) ?>
 	<script type="text/javascript" src="<?php echo $view['assets']->getUrl( 'js/app.js' ); ?>"></script>
@@ -38,7 +41,7 @@
 
 	<?php $view['slots']->output('_content') ?>
 
-    <div class="container">
+	<div class="container">
 		
 			
 		<div class="text-center">
@@ -49,83 +52,137 @@
 
 		</div>
 			
-		
+	  <div id="submission-area" class="row">
 
-      <div id="submission-area" class="row">
-
-        <div id="map-block" class="col-xs-8">
+		<div id="map-block" class="col-xs-8">
 
 			<div id="map"></div>
 
-			<a class="btn btn-primary btn-sm" href="" ng-click="locate()">Show my current location</a>
-			<hr></hr>
-			<div class="well text-center">
-				<h6>This is a project by **Group 2** for the course GIS Application Development - Aalto University</h6>
-			
-		</div>
+			<a class="locate btn btn-primary btn-sm" href="" ng-click="locate()">Show my current location</a>
+
 		</div>
 		
 		
 		<div id="information-block" class="col-xs-4">
-			Help blind people - add your data in few steps!<p></p><p></p>
-			<h5><b>Step 1.</b> Click on the map at the location where your object is situated</h5><p></p>
-			<h5><b>Step 2.</b> Click one more time on the exact point that you want to describe</h5><p></p>
-			<h5><b>Step 3.</b> Add the description of your entry:</h5><p></p>
 
-			<div class="form-group">
-		
-				<select id="feature-type" class="form-control has-error">
+			<div class="panel-group" id="accordion">
+				<div class="panel panel-default">
+					<div class="panel-heading">
+						<h4 class="panel-title">
+							<a data-toggle="collapse" data-parent="#accordion" href="#collapseOne">1. What do you want add?</a>
+						</h4>
+					</div>
 
-					<option value="">Choose the feature type</option>
+					<div id="collapseOne" class="panel-collapse collapse in">
+						<div class="panel-body">
 
-					<option value="entrance">Building Entrance</option>
+							<div class="form-group">
 
-					<option value="tlight">Traffic light</option>
+								<select id="feature-type" class="form-control has-error">
 
-					<option value="Stairs">Stairs</option>
+									<option value="">Choose the feature type</option>
 
-				</select>
+									<option value="entrance">Building Entrance</option>
+
+									<option value="tlight">Traffic light</option>
+
+									<option value="Stairs">Stairs</option>
+
+								</select>
+							</div>						
+						</div>
+					</div>
+				</div>
+
+				<div class="panel panel-default">
+					<div class="panel-heading">
+				  		<h4 class="panel-title">
+							<a data-toggle="collapse" data-parent="#accordion" href="#collapseTwo">2. Select area</a>
+						</h4>
+					</div>
+
+					<div id="collapseTwo" class="panel-collapse collapse">
+						<div class="panel-body">
+							Click on the map at the location where your object is situated and see which features already exist in that area
+						</div>
+					</div>
+				</div>
+
+				<div class="panel panel-default">
+					<div class="panel-heading">
+						<h4 class="panel-title">
+							<a data-toggle="collapse" data-parent="#accordion" href="#collapseThree">3. Select location</a>
+				  		</h4>
+					</div>
+
+					<div id="collapseThree" class="panel-collapse collapse">
+						<div class="panel-body">
+							Click one more time on the exact location of your entrance/traffic lights.
+						</div>
+					</div>
+				</div>
+
+				<div class="panel panel-default">
+					<div class="panel-heading">
+						<h4 class="panel-title">
+							<a data-toggle="collapse" data-parent="#accordion" href="#collapseFour">4. Describe</a>
+						</h4>
+					</div>
+
+					<div id="collapseFour" class="panel-collapse collapse">
+						<div class="panel-body">
+							<div class="input-group">
+
+								<span class="input-group-addon">Describe entry</span>
+
+								<input type="text" class="form-control has-error" placeholder="Your description" ng-model='entry.description' >
+
+							</div>					
+						</div>
+					</div>
+				</div>
+
+				<div class="panel panel-default">
+					<div class="panel-heading">
+						<h4 class="panel-title">
+							<a data-toggle="collapse" data-parent="#accordion" href="#collapseFive">5. Add your OpenStreetMap login</a>
+						</h4>
+					</div>
+
+					<div id="collapseFive" class="panel-collapse collapse">
+						<div class="panel-body">
+							<div class="form-group">
+
+							<p class="text-muted"><small><small>Don't have a OpenStreetMap account? Sign up <a href="https://www.openstreetmap.org/user/new" target="_blank">here</a>.</small></small></p>
+
+							<label class="sr-only" for="osm_password">OpenStreetMap Username</label>
+							<input type="text" id="username" class="form-control" placeholder="Username" ng-model='entry.login.username'><p></p>
+
+							<label class="sr-only" for="osm_password">OpenStreetMap Password</label>
+							<input type="text" id="osm_password" class="form-control has-error" placeholder="Password" ng-model='entry.login.password'>
+
+							<p class="text-info"><small><small>Note: Your OpenStreetMap login information will not be stored, it will be used only to submit the data.</small></small></p>
+
+						</div>				
+						</div>
+					</div>
+				</div>
+
 
 			</div>
-			
 
-			<div class="input-group">
+			<div class="input-group pull-right">
 
-				<span class="input-group-addon">Describe entry</span>
-
-				<input type="text" class="form-control has-error" placeholder="Your description" ng-model='entry.description' >
+				<button type="submit" class="btn btn-default" ng-click='submitEntry()'>Submit</button>
 
 			</div>
 
-
-			<div class="form-group">
-
-				<h5><b>Step 4.</b> Add your OpenStreetMap Login information</h5>
-				<p class="text-muted"><small><small>Don't have a OpenStreetMap account? Sign up <a href="https://www.openstreetmap.org/user/new" target="_blank">here</a>.</small></small></p>
-
-				<label class="sr-only" for="osm_password">OpenStreetMap Username</label>
-				<input type="text" id="username" class="form-control" placeholder="Username" ng-model='entry.login.username'><p></p>
-
-				<label class="sr-only" for="osm_password">OpenStreetMap Password</label>
-				<input type="text" id="osm_password" class="form-control has-error" placeholder="Password" ng-model='entry.login.password'>
-
-				<p class="text-info"><small><small>Note: Your OpenStreetMap login information will not be stored, it will be used only to add the data.</small></small></p>
-
-			</div>
-			<h5><b>Step 5.</b> Submit your entry:</h5><p></p>
-			<div class="input-group pull-left">
-
-			<button type="submit" class="btn btn-default" ng-click='submitEntry()'>Submit</button>
-
-			</div>
-			<p></p>
-			
-			<div class="text-right">
-			<b>Done!</b><p></p>
-			</div>
 		</div>
 	</div>
-				
+			<div class="well text-center">
+				<h6>This is a project by **Group 2** for the course GIS Application Development - Aalto University</h6>
+			
+			</div>	
 	<!-- ng-model = two-way data binding 
 	<input type='text' ng-model='inputValue' />
 

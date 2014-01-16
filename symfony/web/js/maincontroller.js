@@ -17,8 +17,18 @@ app.controller( "MainController", function( $scope, $http, olHandler, osmData ) 
 	 **/
 	$scope.entry = {
 		tag: {
-			k: 'building',
-			v: 'entrance'
+		entrance: {
+			k: 'entrance',
+			v: 'yes';'main';'service';'exit';'emergency',
+			
+			access:	{
+					k: 'access',
+					v: 'yes','no','delivery','private'
+				}
+				
+			wheelchair: 'yes','no'
+			
+			}
 		},
 		description: '',
 		location: '',

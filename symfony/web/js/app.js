@@ -1,1 +1,1 @@
-var app = angular.module( 'BeosmapperApp', [] );
+var app = angular.module( 'BeosmapperApp', [ 'base64' ] );

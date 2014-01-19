@@ -5,6 +5,16 @@ AngularJS sparks:
 
 	- ...
 
+	- We need to specify a different icons for:
+		- User area selection
+		- User entrance location
+		- One diffent icon for each feature type
+
+
+TODO:
+	- Display Lat/Lon in area selection
+	- Add descriptions to each marker
+	- Prevent user from opening next tabs
 */
 
 app.controller( "MainController", function( $scope, $http, olHandler, osmData ) {
@@ -15,22 +25,26 @@ app.controller( "MainController", function( $scope, $http, olHandler, osmData ) 
 	/**
 	 * User entry model
 	 **/
-	$scope.entry = {
-		tag: {
-			entrance: {
-					k: 'entrance',
-					v: 'yes;main;service;exit;emergency'
-			},
+			// entrance: {
+			// 		k: 'entrance',
+			// 		v: 'yes;main;service;exit;emergency'
+			// },
 			
-			access:	{
-					k: 'access',
-					v: 'yes;no;delivery;private'
-				},
+			// access:	{
+			// 		k: 'access',
+			// 		v: 'yes;no;delivery;private'
+			// 	},
 				
-			wheelchair: 'yes;no'
+			// wheelchair: 'yes;no'
 					
-		},
-		
+
+	$scope.entry = {
+		featureType: '',
+		tags: [ ],
+		/*tag: {
+			k: 'entrance',
+			v: 'yes'
+		},*/
 		description: '',
 		location: '',
 		login: {
@@ -45,25 +59,63 @@ app.controller( "MainController", function( $scope, $http, olHandler, osmData ) 
 	 **/
 	olHandler.initOSM( 'map', '../css/theme/default/style.css' );
 
-	$scope.userClick = olHandler.initClick( $scope );
+	olHandler.initAreaSelectionClick( $scope );
 
-	features = osmData.getFeatures({
-		tag: {
-			k: 'building',
-			v: 'entrance'
-		},
-		bbox: '24.93587,60.15671,24.94755,60.16218'
-	}).then( function( features ) {
+	olHandler.initEntryClick( $scope );
 
-		olHandler.addMarkers( features );
+	olHandler.disableClickEvents( 'entry' );
 
-	}, function( status ) {
-		// Error
-	});
+	//olHandler.enableClickEvent( 'area-selection' );
 
 
 	/**
-	 * User bound functions
+	 * Area selection functionality
+	 **/
+
+	// Initializes the area selection OpenLayers click event
+	$scope.initAreaSelection = function() {
+
+		olHandler.enableClickEvent( 'area-selection' );
+
+	};
+
+
+
+
+
+
+	$scope.selectFeatureType = function() {
+
+		olHandler.disableClickEvents( 'all' );
+
+	};
+
+
+	$scope.selectLocation = function() {
+
+		olHandler.disableClickEvents( 'all' );
+
+		olHandler.enableClickEvent( 'entry' );
+
+	};
+
+
+	$scope.submitEntry = function() {
+
+		// if ( $scope.entry.featureType == 'entrance' ) {
+
+		// 	$scope.entry.tags.push( { entrance: 'yes' } );
+
+		// }
+
+		osmData.addFeature( $scope.entry );
+
+	};
+
+
+
+	/**
+	 * Geolocation
 	 **/
 	$scope.locate = function() {
 
@@ -72,26 +124,70 @@ app.controller( "MainController", function( $scope, $http, olHandler, osmData ) 
 	};
 
 
+
 	/**
-	 * Callback for OpenLayers click
+	 *
+	 * Map click callback functions
+	 *
 	 **/
-	$scope.olHandlerClickCallback = function( e ) {
+
+	/**
+	 *
+	 * @param object	lonlat	OpenLayers Latitude/Longitude object with the user area click location
+	 *
+	 **/
+	$scope.olHandlerAreaSelectionClickCallback = function( lonlat ) {
+
+		olHandler.clearOSMFeaturesMarkers();
+
+		$scope.entry.areaLocation = lonlat;
+
+		var boundingBox = olHandler.createBboxFromLonLat( lonlat ); // Gets the bbox polygon
+
+		// Currently we only fetch building entrances. Will be extended to other features.
+		var args = {
+			tags: {
+				tag: {
+					k: 'entrance',
+					v: 'yes'
+				}
+			},
+			bbox: boundingBox.bottomLeft.x + ',' + boundingBox.bottomLeft.y + ',' + boundingBox.topRight.x + ',' + boundingBox.topRight.y
+		};
+
+		features = osmData.getFeatures( args ).then( function( features ) {
+console.log(features); // ToDo: Remove this
+			olHandler.addOSMFeaturesMarkers( features );
+
+		}, function( status ) {
+
+			console.log( 'Ay caramba... looks like something went wrong.' );
+
+		});
+
+	};
+
+
+	$scope.olHandlerEntryClickCallback = function( e ) {
 
 		$scope.entry.location = e;
 
-	};
-
-	$scope.submitEntry = function() {
-
-		osmData.addFeature( $scope.entry );
 
 	};
+
 
 
 	/**
-	* Bootstrap
-	**/
-	console.log( jQuery('body') );
+	 * Menu functionality
+	 **/
+	$scope.nextSection = function( e ) {
 
+		var activeSection = jQuery( '.collapse.in' );
+
+		jQuery( '.collapse' ).removeClass( 'in' );
+
+		jQuery( activeSection ).parent().nextAll( '.panel-default' ).find( '.collapse' ).eq(0).addClass( 'in' );
+
+	};
 
 });

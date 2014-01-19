@@ -13,7 +13,7 @@ app.factory( 'olHandler', function() {
 		markerIcon: {},
 		projection: 'EPSG:900913',
 		center: '',
-		zoom: 13,
+		zoom: 13
 	};
 
 	var olHandler = {};
@@ -60,11 +60,10 @@ app.factory( 'olHandler', function() {
 
 	};
 
-
 	/**
 	 * Initialize user click
 	 */
-	olHandler.initClick = function( $scope ) {
+	olHandler.initAreaSelectionClick = function( $scope ) {
 
 		OpenLayers.Control.Click = OpenLayers.Class( OpenLayers.Control, {
 
@@ -97,26 +96,125 @@ app.factory( 'olHandler', function() {
 
 				olObj.markers.userInput.addMarker( new OpenLayers.Marker( lonlat, olObj.markerIcon.userInput.clone() ) );
 
-				$scope.olHandlerClickCallback( e );
+				$scope.olHandlerAreaSelectionClickCallback( lonlat ); // Returns the lonlat click object
 
 			}
 
 		});
 
 
-		click = new OpenLayers.Control.Click();
+		areaSelectionClick = new OpenLayers.Control.Click();
 
-		olObj.map.addControl( click );
+		olObj.map.addControl( areaSelectionClick );
 
-		click.activate();
+		areaSelectionClick.activate();
 
 	};
+
+
+
+	/**
+	 * Initialize user click
+	 */
+	olHandler.initEntryClick = function( $scope ) {
+
+		OpenLayers.Control.Click = OpenLayers.Class( OpenLayers.Control, {
+
+			defaultHandlerOptions: {
+				'single': true,
+				'double': false,
+				'pixelTolerance': 0,
+				'stopSingle': false,
+				'stopDouble': false
+			},
+
+			initialize: function( options ) {
+
+				this.handlerOptions = OpenLayers.Util.extend( {}, this.defaultHandlerOptions );
+
+				OpenLayers.Control.prototype.initialize.apply( this, arguments );
+
+				this.handler = new OpenLayers.Handler.Click( this, {
+						'click': this.trigger
+					}, this.handlerOptions
+				);
+
+			},
+
+			trigger: function( e ) {
+
+				var lonlat = olObj.map.getLonLatFromViewPortPx( e.xy );
+
+				olObj.markers.userInput.clearMarkers();
+
+				olObj.markers.userInput.addMarker( new OpenLayers.Marker( lonlat, olObj.markerIcon.userInput.clone() ) );
+
+				var fromProjection	= new OpenLayers.Projection( olObj.map.getProjection() );
+				var toProjection	= new OpenLayers.Projection( "EPSG:4326" );
+
+				$scope.olHandlerEntryClickCallback( lonlat.transform( fromProjection, toProjection ) );
+
+			}
+
+		});
+
+
+		entryClick = new OpenLayers.Control.Click();
+
+		olObj.map.addControl( entryClick );
+
+		entryClick.activate();
+
+	};
+
+
+
+	olHandler.enableClickEvent = function( eventName ) {
+
+		if ( eventName == 'entry' ) {
+
+			entryClick.activate();
+
+		}
+
+		if ( eventName == 'area-selection' ) {
+
+			areaSelectionClick.activate();
+
+		}
+	};
+
+	/**
+	 * Disable click events
+	 **/
+	olHandler.disableClickEvents = function( eventName ) {
+
+		if ( eventName == 'all' ) {
+
+			areaSelectionClick.deactivate();
+
+			entryClick.deactivate();
+
+		}
+
+		if ( eventName == 'area-selection' ) {
+
+			areaSelectionClick.deactivate();
+
+		}
+
+	};
+
+
+
+
+	
 
 
 	/**
 	 * Add markers to a specific layer
 	 */
-	olHandler.addMarkers = function( features ) {
+	olHandler.addOSMFeaturesMarkers = function( features ) {
 
 		var fromProjection	= new OpenLayers.Projection( 'EPSG:4326' );
 		var toProjection	= new OpenLayers.Projection( olObj.map.getProjection() );
@@ -128,6 +226,12 @@ app.factory( 'olHandler', function() {
 			olObj.markers.features.addMarker( new OpenLayers.Marker( coordinates, olObj.markerIcon.features.clone() ) );
 
 		});
+	};
+
+	olHandler.clearOSMFeaturesMarkers = function() {
+
+		olObj.markers.features.clearMarkers( );
+
 	};
 
 
@@ -167,6 +271,61 @@ app.factory( 'olHandler', function() {
 		});
 	};
 
+
+	/**
+	 * Creates and displays in the map the bounding box based on a lonlat point
+	 *
+	 * @param {object} lonlat	Openlayers.LonLat object with the center position of the bounding box
+	 *
+	 * @returns {object}	bottom-left and top-right xy coordinates in EPSG:4326
+	 */
+	olHandler.createBboxFromLonLat = function( lonlat ) {
+
+		var vectorLayer = null;
+
+		var bufferSizeMeters = "1000.00";
+
+		// Create the layer if doesn't exist, otherwise get the layer and clear it
+		vectorLayerQuery = olObj.map.getLayersByName( "BeosMapper:Vector" );
+
+		if ( vectorLayerQuery.length === 0 ) {
+
+			vectorLayer = new OpenLayers.Layer.Vector( "BeosMapper:Vector" );
+		
+			olObj.map.addLayer( vectorLayer );
+
+		}
+		else {
+
+			vectorLayer = vectorLayerQuery.pop(); // Get the first result out of the array
+
+			vectorLayer.removeAllFeatures();
+
+		}
+
+		var center = new OpenLayers.Geometry.Point( lonlat.lon, lonlat.lat );
+
+		var boxPolygon = new OpenLayers.Geometry.Polygon.createRegularPolygon( center, bufferSizeMeters, 4, 0 );
+
+		vectorLayer.addFeatures( [ new OpenLayers.Feature.Vector( boxPolygon, null, null ) ] );
+
+
+		var boundingBox = { bottomLeft: null, topRight: null };
+
+		// Get bounding box polygons
+		boundingBox.bottomLeft = new OpenLayers.Geometry.Point( boxPolygon.bounds.left, boxPolygon.bounds.bottom );
+		boundingBox.topRight = new OpenLayers.Geometry.Point( boxPolygon.bounds.right, boxPolygon.bounds.top );
+
+		// Transform coordinates
+		var fromProjection	= new OpenLayers.Projection( olObj.map.getProjection() );
+		var toProjection	= new OpenLayers.Projection( "EPSG:4326" );
+
+		boundingBox.bottomLeft = boundingBox.bottomLeft.transform( fromProjection, toProjection );
+		boundingBox.topRight = boundingBox.topRight.transform( fromProjection, toProjection );
+
+		return boundingBox;
+
+	};
 
 
 	return olHandler;

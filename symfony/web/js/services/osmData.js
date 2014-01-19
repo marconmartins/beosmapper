@@ -1,55 +1,165 @@
 /**
  *
  **/
-app.factory( 'osmData', function( $http, $q ) {
+app.factory( 'osmData', function( $http, $q, $base64 ) {
 
 	//var osmUrl = 'http://www.overpass-api.de/api/xapi?*[building=entrance][bbox=24.93587,60.15671,24.94755,60.16218]';
 
-	var osmUrl = 'http://www.overpass-api.de/api/xapi?*';
+	var osmOverpassUrl = 'http://www.overpass-api.de/api/xapi?*';
+	
+	var osmCreateChangesetUrl = 'http://api06.dev.openstreetmap.org/api/0.6/changeset/create';
+	var osmCreateNodeUrl =		'http://api06.dev.openstreetmap.org/api/0.6/node/create';
 
-	return {
+	var osmData = {};
 
-		/**
-		 * Retrieves OSM Features
-		 *
-		 * @param	{object}	params	Object of key/value pairs => { tag:{k,v}, bbox:'' }
-		 *
-		 * @returns	{object}	JSON object with OSM features
-		 */
-		getFeatures: function( params ) {
+	osmData.changeset = {
+		id: null,
+		created: null,
+		modified: null
+	};
 
-			var deferred = $q.defer();
+	/**
+	 * Retrieves OSM Features
+	 *
+	 * @param	{object}	params	Object of key/value pairs => { tag:{k,v}, bbox:'' }
+	 *
+	 * @returns	{object}	JSON object with OSM features
+	 */
+	osmData.getFeatures = function( params ) {
 
-			// Generate URL based on call parameters
-			var requestUrl = osmUrl + '[' + params.tag.k + '=' + params.tag.v + '][bbox=' + params.bbox + ']';
+		var deferred = $q.defer();
 
-			// Perform the request
-			$http( { method: 'GET', url: requestUrl } ).
-				success( function( data, status, headers, config ) {
+		// Generate URL based on call parameters
+		var requestUrl = osmOverpassUrl + '[' + params.tags.tag.k + '=' + params.tags.tag.v + '][bbox=' + params.bbox + ']';
 
-					var x2js = new X2JS();
+		// Perform the request
+		$http( { method: 'GET', url: requestUrl } ).
+			success( function( data, status, headers, config ) {
 
-					var jsonData = x2js.xml_str2json( data ); // convert XML response into json
+				var x2js = new X2JS();
 
-					deferred.resolve( jsonData );
+				var jsonData = x2js.xml_str2json( data ); // convert XML response into json
 
-				}).
-				error( function( data, status, headers, config ) {
+				deferred.resolve( jsonData );
 
-					deferred.reject( status );
+			}).
+			error( function( data, status, headers, config ) {
 
-				});
+				deferred.reject( status );
 
-			return deferred.promise;
+			});
 
-		},
+		return deferred.promise;
 
-		// TODO: Add Feature, not sure will be fully done or through PHP
-		addFeature: function( feature ) {
+	};
 
-			console.log( feature );
+
+	osmData.addFeature = function( entry ) {
+
+		console.log( entry );
+		
+		var requestData = '';
+
+		//var auth = 'marcomartins@fimdalinha.com:4BtE4Cy6WOex';
+
+		var auth = entry.login.username + ':' + entry.login.password;
+		$http.defaults.headers.common.Authorization = 'Basic ' + $base64.encode( auth );
+
+		// Changeset
+		var now = Math.round(new Date().getTime() / 1000);
+		var yesterday = now - ( 24 * 3600 );
+		var hourAgo = now - 3600;
+
+		if ( osmData.changeset.id === null || ( osmData.changeset.created < yesterday ) || ( osmData.changeset.modified < hourAgo ) ) {
+
+			var promise = osmData.createChangeset( entry, auth );
+
+			promise.then( function() {
+
+				osmData.addRequest( entry, auth );
+
+			});
+
+		}
+		else {
+
+			osmData.addRequest( entry, auth );
 
 		}
 
 	};
+		
+	osmData.createChangeset = function( entry, auth ) {
+
+		var requestData = '';
+
+		$http.defaults.headers.common.Authorization = 'Basic ' + $base64.encode( auth );
+
+		requestData = '<osm> \
+			<changeset> \
+				<tag k="created_by" v="' + entry.login.username +'" /> \
+				<tag k="comment" v="BeosMapper: Adding building entrances" /> \
+			</changeset> \
+		</osm>';
+
+		var deferred = $q.defer();
+
+		$http( { method: 'PUT', url: osmCreateChangesetUrl, data: requestData } ).
+			success( function( data, status, headers, config ) {
+				
+				var timestamp = Math.round( new Date().getTime() / 1000 );
+
+				osmData.changeset.id = data;
+
+				osmData.changeset.created = timestamp;
+
+				osmData.changeset.modified = timestamp;
+
+				deferred.resolve();
+
+			}).
+			error( function( data, status, headers, config ) {
+
+				console.log( 'ay caramba... ' + data );
+
+				deferred.reject( status );
+
+			});
+
+		return deferred.promise;
+
+	};
+
+
+	osmData.addRequest = function( entry, auth ) {
+
+		var requestData = '<osm>';
+
+		requestData += '<node changeset="' + osmData.changeset.id + '" lat="' +  entry.location.lat + '" lon="' +  entry.location.lon + '">';
+
+		angular.forEach ( entry.tags, function( v, k ) {
+
+			requestData += '<tag k="' + k + '" v="' + v + '"/>';
+
+		});
+
+		requestData += '</node></osm>';
+
+		$http( { method: 'PUT', url: osmCreateNodeUrl, data: requestData } ).
+			success( function( data, status, headers, config ) {
+
+				console.log( data );
+
+			}).
+			error( function( data, status, headers, config ) {
+
+				console.log( 'ay caramba... can has no enter the entry' );
+
+				console.log( data );
+
+			});
+
+	};
+
+	return osmData;
 });

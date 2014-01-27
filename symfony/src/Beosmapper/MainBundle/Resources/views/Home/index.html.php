@@ -143,11 +143,11 @@
 
 							<?php // Entrance ?>
 							<div class="form-group">
-								<label for="tag-entrance">Importance or type of use</label>
+								<label for="tag-entrance"><a href="http://wiki.openstreetmap.org/wiki/Key:entrance" target="_blank">Importance or type of use</a></label>
 
 								<select id="tag-entrance" name="tag-entrance" class="form-control has-error" ng-model='entry.tags.entrance'>
 
-									<option value="yes" selected>Normal</option>
+									<option value="yes" selected> Normal</option>
 
 									<option value="main">Main</option>
 
@@ -256,6 +256,8 @@
 			<div class="input-group pull-right">
 
 				<button type="submit" class="btn btn-default" ng-click='submitEntry()'>Submit</button>
+				<div class="alert alert-success">Your entry has been successfully submitted!<p>You can continue to add new entries.</div>
+				<div class="alert alert-danger">Please, check all the steps carefully! Something is missing.</div>
 
 			</div>
 

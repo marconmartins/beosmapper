@@ -53,10 +53,10 @@ app.factory( 'olHandler', function() {
 		olObj.map.setCenter( new OpenLayers.LonLat( 2777592, 8437735 ), olObj.zoom );
 
 		// Set marker icons
-		var size = new OpenLayers.Size( 21, 25 );
+		var size = new OpenLayers.Size( 20, 25 );
 		var offset = new OpenLayers.Pixel( -( size.w / 2 ), -size.h );
-		olObj.markerIcon.features = new OpenLayers.Icon( '../img/marker-green.png', size, offset );
-		olObj.markerIcon.userInput = new OpenLayers.Icon( '../img/marker.png', size, offset );
+		olObj.markerIcon.features = new OpenLayers.Icon( '../img/entgreen.png', size, offset );
+		olObj.markerIcon.userInput = new OpenLayers.Icon( '../img/entpink.png', size, offset );
 
 	};
 

@@ -56,14 +56,16 @@ app.factory( 'osmData', function( $http, $q, $base64 ) {
 
 	osmData.addFeature = function( entry ) {
 
-		console.log( entry );
-		
 		var requestData = '';
+		var operationId = false;
 
 		//var auth = 'marcomartins@fimdalinha.com:4BtE4Cy6WOex';
 
+		var deferred = $q.defer();
+
 		var auth = entry.login.username + ':' + entry.login.password;
 		$http.defaults.headers.common.Authorization = 'Basic ' + $base64.encode( auth );
+		$http.defaults.headers.common['X-StatusOnLoginFail'] = '418';
 
 		// Changeset
 		var now = Math.round(new Date().getTime() / 1000);
@@ -72,23 +74,26 @@ app.factory( 'osmData', function( $http, $q, $base64 ) {
 
 		if ( osmData.changeset.id === null || ( osmData.changeset.created < yesterday ) || ( osmData.changeset.modified < hourAgo ) ) {
 
-			var promise = osmData.createChangeset( entry, auth );
-
-			promise.then( function() {
-
-				osmData.addRequest( entry, auth );
-
-			});
-
+			osmData.createChangeset( entry, auth )
+				.then( function() { return osmData.addRequest( entry, auth ); })
+				.then(
+					function( data ) { deferred.resolve( data ); },
+					function( status ) { deferred.reject( status ); }
+				);
 		}
 		else {
 
-			osmData.addRequest( entry, auth );
+			osmData.addRequest( entry, auth ).then(function( data ) {
+				deferred.resolve( data );
+			});
 
 		}
 
+		return deferred.promise;
+
 	};
-		
+	
+
 	osmData.createChangeset = function( entry, auth ) {
 
 		var requestData = '';
@@ -133,6 +138,8 @@ app.factory( 'osmData', function( $http, $q, $base64 ) {
 
 	osmData.addRequest = function( entry, auth ) {
 
+		var deferred = $q.defer();
+
 		var requestData = '<osm>';
 
 		requestData += '<node changeset="' + osmData.changeset.id + '" lat="' +  entry.location.lat + '" lon="' +  entry.location.lon + '">';
@@ -148,16 +155,16 @@ app.factory( 'osmData', function( $http, $q, $base64 ) {
 		$http( { method: 'PUT', url: osmCreateNodeUrl, data: requestData } ).
 			success( function( data, status, headers, config ) {
 
-				console.log( data );
+				deferred.resolve( data );
 
 			}).
 			error( function( data, status, headers, config ) {
-
-				console.log( 'ay caramba... can has no enter the entry' );
-
-				console.log( data );
+				
+				deferred.reject( status );
 
 			});
+
+		return deferred.promise;
 
 	};
 

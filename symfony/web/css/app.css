@@ -24,9 +24,9 @@ label {
 	margin-bottom: 25px;
 }
 
-.panel-group {
+/*.panel-group {
 	margin-bottom: 20px;
-}
+}*/
 
 
 #content {
@@ -34,23 +34,44 @@ label {
 	width: 100%;
 }
 
+
+/* User input */
 #submission-area {
 	margin-bottom: 50px;
 	padding-top: 50px;
 }
 
-#map-block a.locate {
-	margin-top: 10px;
+.is-required {
+	color: #a94442;
+	font-weight: bold;
+}
+
+.text-muted .is-required {
+	vertical-align: middle;
+}
+
+.submission-result {
+	margin-top: 2em;
 }
 
 
+
 /* OpenLayers */
+#map-block {
+	margin-bottom: 2em;
+}
+
 #map.olMap {
 	height: 350px;
 	width: 100%;
+}
+
+#map-block a.locate {
+	margin-top: 1em;
 }
 
 .olControlAttribution {
 	bottom: 0;
 	font-size: 0.7em;
 }
+

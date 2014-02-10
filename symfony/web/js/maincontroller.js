@@ -21,23 +21,13 @@ app.controller( "MainController", function( $scope, $http, olHandler, osmData ) 
 
 	$scope.pageTitle = "Beosmapper";
 
+	$scope.submission = {};
+	$scope.submission.success = false;
+	$scope.submission.failure = false;
 
 	/**
 	 * User entry model
 	 **/
-			// entrance: {
-			// 		k: 'entrance',
-			// 		v: 'yes;main;service;exit;emergency'
-			// },
-			
-			// access:	{
-			// 		k: 'access',
-			// 		v: 'yes;no;delivery;private'
-			// 	},
-				
-			// wheelchair: 'yes;no'
-					
-
 	$scope.entry = {
 		featureType: '',
 		tags: [ ],
@@ -80,10 +70,6 @@ app.controller( "MainController", function( $scope, $http, olHandler, osmData ) 
 	};
 
 
-
-
-
-
 	$scope.selectFeatureType = function() {
 
 		olHandler.disableClickEvents( 'all' );
@@ -104,11 +90,26 @@ app.controller( "MainController", function( $scope, $http, olHandler, osmData ) 
 
 		// if ( $scope.entry.featureType == 'entrance' ) {
 
-		// 	$scope.entry.tags.push( { entrance: 'yes' } );
+		// $scope.entry.tags.push( { entrance: 'yes' } );
 
 		// }
 
-		osmData.addFeature( $scope.entry );
+		//var	submitPromise = osmData.addFeature( $scope.entry );
+console.log($scope.entry);
+		osmData.addFeature( $scope.entry ).then(
+			function( data ) {
+
+				$scope.submission.failure = false;
+				$scope.submission.success = true;
+
+			},
+			function( status ) {
+
+				$scope.submission.success = false;
+				$scope.submission.failure = true;
+
+			}
+		);
 
 	};
 
@@ -156,7 +157,7 @@ app.controller( "MainController", function( $scope, $http, olHandler, osmData ) 
 		};
 
 		features = osmData.getFeatures( args ).then( function( features ) {
-console.log(features); // ToDo: Remove this
+
 			olHandler.addOSMFeaturesMarkers( features );
 
 		}, function( status ) {
@@ -178,7 +179,7 @@ console.log(features); // ToDo: Remove this
 
 
 	/**
-	 * Menu functionality
+	 * UI flow
 	 **/
 	$scope.nextSection = function( e ) {
 
@@ -187,6 +188,26 @@ console.log(features); // ToDo: Remove this
 		jQuery( '.collapse' ).removeClass( 'in' );
 
 		jQuery( activeSection ).parent().nextAll( '.panel-default' ).find( '.collapse' ).eq(0).addClass( 'in' );
+
+	};
+
+	// Disable the submit if the required section are not set ( login + location + entrance type )
+	$scope.disableSubmit = function() {
+
+		if ( $scope.entry.login.username && $scope.entry.login.password && $scope.entry.location && $scope.entry.featureType ) { return false; }
+
+		return true;
+
+	};
+
+	
+
+	// Toggles the visibility of the submit button based on the response
+	$scope.toggleSubmit = function() {
+
+		if ( $scope.submission.failure || $scope.submission.success ) { return true; }
+
+		return false;
 
 	};
 

@@ -10,7 +10,7 @@
 	<?php // Javascript libraries ?>
 	<script type="text/javascript" src="<?php echo $view['assets']->getUrl( 'js/lib/xml2json.js' ); ?>"></script>
 	<script type="text/javascript" src="<?php echo $view['assets']->getUrl( 'js/lib/OpenLayers.js'); ?>"></script>
-	<script type="text/javascript" src="<?php echo $view['assets']->getUrl( 'js/lib/angular.js' ); ?>"></script>
+	<script type="text/javascript" src="<?php echo $view['assets']->getUrl( 'js/lib/angular.min.js' ); ?>"></script>
 	<script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
 	<script src="//netdna.bootstrapcdn.com/bootstrap/3.0.3/js/bootstrap.min.js"></script>
 	<script type="text/javascript" src="<?php echo $view['assets']->getUrl( 'js/lib/angular-base64.js' ); ?>"></script>
@@ -19,6 +19,8 @@
 	<script type="text/javascript" src="<?php echo $view['assets']->getUrl( 'js/app.js' ); ?>"></script>
 	<script type="text/javascript" src="<?php echo $view['assets']->getUrl( 'js/maincontroller.js' ); ?>"></script>
 
+
+	<!--<script type="text/javascript" src="<?php /*echo $view['assets']->getUrl( 'js/services/myhttpresponseinterceptor.js' );*/ ?>"></script>-->
 	<script type="text/javascript" src="<?php echo $view['assets']->getUrl( 'js/services/olHandler.js' ); ?>"></script>
 	<script type="text/javascript" src="<?php echo $view['assets']->getUrl( 'js/services/osmData.js?t=' . date('U') ); ?>"></script>
 
@@ -53,7 +55,7 @@
 			
 	  <div id="submission-area" class="row">
 
-		<div id="map-block" class="col-xs-8">
+		<div id="map-block" class="col-md-8">
 
 			<div id="map"></div>
 
@@ -62,7 +64,7 @@
 		</div>
 		
 		
-		<div id="information-block" class="col-xs-4">
+		<div id="information-block" class="col-md-4">
 
 			<div class="panel-group" id="accordion">
 
@@ -85,7 +87,7 @@
 				<div class="panel panel-default">
 					<div class="panel-heading">
 						<h4 class="panel-title">
-							<a data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" ng-click="selectFeatureType();">2. What do you want add?</a>
+							<a data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" ng-click="selectFeatureType();">2. What do you want add?</a> <span class="is-required">*</span>
 						</h4>
 					</div>
 
@@ -97,12 +99,6 @@
 								<select id="feature-type" class="form-control has-error" ng-model='entry.featureType'>
 
 									<option value="entrance" selected>Building Entrance</option>
-
-									<!--<option value="">Choose the feature type</option>
-
-									<option value="tlight">Traffic light</option>
-
-									<option value="Stairs">Stairs</option>-->
 
 								</select>
 
@@ -116,7 +112,7 @@
 				<div class="panel panel-default">
 					<div class="panel-heading">
 						<h4 class="panel-title">
-							<a data-toggle="collapse" data-parent="#accordion" href="#collapseThree" ng-click="selectLocation();">3. Select location</a>
+							<a data-toggle="collapse" data-parent="#accordion" href="#collapseThree" ng-click="selectLocation();">3. Select location</a> <span class="is-required">*</span>
 				  		</h4>
 					</div>
 
@@ -168,7 +164,7 @@
 							<?php // Access ?>
 							<div class="form-group">
 
-								<label for="tag-access">Allowed to enter</label>
+								<label for="tag-access"><a href="http://wiki.openstreetmap.org/wiki/Key:access">Allowed to enter</a></label>
 
 								<select id="tag-access" name="tag-access" class="form-control has-error" ng-model='entry.tags.access'>
 
@@ -187,7 +183,7 @@
 							<?php // Access ?>
 							<div class="form-group">
 
-								<label for="tag-wheelchair">Wheelchair access</label>
+								<label for="tag-wheelchair"><a href="http://wiki.openstreetmap.org/wiki/Key:wheelchair">Wheelchair access</a></label>
 
 								<select id="tag-wheelchair" name="tag-wheelchair" class="form-control has-error" ng-model='entry.tags.wheelchair'>
 
@@ -205,14 +201,14 @@
 							<?php // Automatic doors ?>
 							<div class="form-group">
 								<div class="checkbox">
-									<label><input type="checkbox" value="" ng-model='entry.tags.automatic_door' ng-true-value="yes" ng-false-value="no">Automatic doors</label>
+									<label><input type="checkbox" value="" ng-model='entry.tags.automatic_door' ng-true-value="yes" ng-false-value="no"><a href="http://wiki.openstreetmap.org/wiki/Key:automatic_door">Automatic doors</a></label>
 								</div>
 							</div>
 
 							<?php // Reference ?>
 							<div class="form-group">
 
-								<label for="tag-ref">Entrance Reference</label>
+								<label for="tag-ref"><a href="http://wiki.openstreetmap.org/wiki/Key:ref">Entrance Reference</a></label>
 
 								<input type="text" id="tag-ref" name="tag-ref" class="form-control has-error" placeholder="example: A" ng-model='entry.ref' >
 
@@ -227,7 +223,7 @@
 				<div class="panel panel-default">
 					<div class="panel-heading">
 						<h4 class="panel-title">
-							<a data-toggle="collapse" data-parent="#accordion" href="#collapseFive">5. Add your OpenStreetMap login</a>
+							<a data-toggle="collapse" data-parent="#accordion" href="#collapseFive">5. Add your OpenStreetMap login</a> <span class="is-required">*</span>
 						</h4>
 					</div>
 
@@ -241,7 +237,7 @@
 								<input type="text" id="username" class="form-control" placeholder="Username" ng-model='entry.login.username'><p></p>
 
 								<label class="sr-only" for="osm_password">OpenStreetMap Password</label>
-								<input type="text" id="osm_password" class="form-control has-error" placeholder="Password" ng-model='entry.login.password'>
+								<input type="password" id="osm_password" class="form-control" placeholder="Password" ng-model='entry.login.password'>
 
 								<p class="text-info"><small><small>Note: Your OpenStreetMap login information will not be stored, it will be used only to submit the data.</small></small></p>
 
@@ -249,18 +245,22 @@
 						</div>
 					</div>
 				</div>
-
-
 			</div>
+			<p class="text-muted"><span class="is-required">*</span> <small>Required section</small></p>
 
 			<div class="input-group pull-right">
 
-				<button type="submit" class="btn btn-default" ng-click='submitEntry()'>Submit</button>
-				<div class="alert alert-success">Your entry has been successfully submitted!<p>You can continue to add new entries.</div>
-				<div class="alert alert-danger">Please, check all the steps carefully! Something is missing.</div>
+				<button type="submit" class="btn btn-default" ng-disabled='disableSubmit()' ng-hide='toggleSubmit()' ng-click='submitEntry()'>Submit</button>
 
 			</div>
 
+			<div class="col-md-12">
+
+				<div class="submission-result alert alert-success" ng-show="submission.success">Your entry has been successfully submitted!<p>You can continue to add new entries.</div>
+
+				<div class="submission-result alert alert-danger" ng-show="submission.failure">Please, check all the steps carefully! Something is missing.</div>
+
+			</div>
 		</div>
 	</div>
 			<div class="well text-center">

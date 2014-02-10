@@ -250,7 +250,9 @@
 
 			<div class="input-group pull-right">
 
-				<button type="submit" class="btn btn-default" ng-disabled='disableSubmit()' ng-hide='toggleSubmit()' ng-click='submitEntry()'>Submit</button>
+<!-- 				<button type="submit" class="btn btn-default" ng-disabled='disableSubmit()' ng-hide='toggleSubmit()' ng-click='submitEntry()'>Submit</button>
+ -->
+				<button type="submit" class="btn btn-default" ng-disabled='disableSubmit()' ng-click='submitEntry()'>Submit</button>
 
 			</div>
 

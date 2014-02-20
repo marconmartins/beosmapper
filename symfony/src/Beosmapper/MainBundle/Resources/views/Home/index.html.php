@@ -205,6 +205,31 @@
 								</div>
 							</div>
 
+							<?php /*house number (possible letter is included), house street, postcode */ ?>
+
+							<?php // Address - City ?>
+							<div class="form-group">
+								<label for="tag-addr:housenumber"><a href="http://wiki.openstreetmap.org/wiki/Key:ref">Street</a></label>
+								<input type="text" id="tag-addr:housenumber" name="tag-addr:housenumber" class="form-control has-error" placeholder="" ng-model='entry.addr_housenumber'>
+
+								<label for="tag-addr:postcode"><a href="http://wiki.openstreetmap.org/wiki/Key:ref">Number</a></label>
+								<input type="text" id="tag-addr:postcode" name="tag-addr:postcode" class="form-control has-error" placeholder="" ng-model='entry.addr_postcode'>
+
+
+								<label for="tag-addr:postcode"><a href="http://wiki.openstreetmap.org/wiki/Key:ref">Postal Code</a></label>
+								<input type="text" id="tag-addr:postcode" name="tag-addr:postcode" class="form-control has-error" placeholder="" ng-model='entry.addr_postcode'>
+
+								<label for="tag-addr:city"><a href="http://wiki.openstreetmap.org/wiki/Key:ref">City</a></label>
+								<input type="text" id="tag-addr:city" name="tag-addr:city" class="form-control has-error" placeholder="" ng-model='entry.addrcity'>
+
+								<label for="tag-addr:state"><a href="http://wiki.openstreetmap.org/wiki/Key:ref">State</a></label>
+								<input type="text" id="tag-addr:state" name="tag-addr:state" class="form-control has-error" placeholder="" ng-model='entry.addrstate'>
+
+								<label for="tag-addr:country"><a href="http://wiki.openstreetmap.org/wiki/Key:ref">Country</a></label>
+								<input type="text" id="tag-addr:country" name="tag-addr:country" class="form-control has-error" placeholder="" ng-model='entry.addrcountry'>
+
+							</div>
+
 							<?php // Reference ?>
 							<div class="form-group">
 

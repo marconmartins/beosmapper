@@ -59,8 +59,6 @@ app.factory( 'osmData', function( $http, $q, $base64 ) {
 		var requestData = '';
 		var operationId = false;
 
-		//var auth = 'marcomartins@fimdalinha.com:4BtE4Cy6WOex';
-
 		var deferred = $q.defer();
 
 		var auth = entry.login.username + ':' + entry.login.password;

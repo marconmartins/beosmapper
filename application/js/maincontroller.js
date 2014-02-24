@@ -30,7 +30,9 @@ app.controller( "MainController", function( $scope, $http, olHandler, osmData ) 
 	 **/
 	$scope.cleanEntry = {
 		featureType: 'entrance', // Default value = entrance
-		tags: [ ],
+		tags: {
+			attribution: 'Created with Beosmapper'
+		},
 		description: '',
 		location: '',
 		login: {
@@ -95,7 +97,9 @@ app.controller( "MainController", function( $scope, $http, olHandler, osmData ) 
 
 				$scope.entry = {
 					featureType: 'entrance',
-					tags: [ ],
+					tags: {
+						attribution: 'Created with Beosmapper'
+					},
 					description: '',
 					location: '',
 					login: {
@@ -182,7 +186,6 @@ app.controller( "MainController", function( $scope, $http, olHandler, osmData ) 
 	};
 
 
-
 	/**
 	 * UI flow
 	 **/
@@ -196,6 +199,7 @@ app.controller( "MainController", function( $scope, $http, olHandler, osmData ) 
 
 	};
 
+
 	// Disable the submit if the required section are not set ( login + location + entrance type )
 	$scope.disableSubmit = function() {
 
@@ -205,7 +209,6 @@ app.controller( "MainController", function( $scope, $http, olHandler, osmData ) 
 
 	};
 
-	
 
 	// Toggles the visibility of the submit button based on the response
 	$scope.toggleSubmit = function() {

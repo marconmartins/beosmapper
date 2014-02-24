@@ -144,6 +144,8 @@ app.factory( 'osmData', function( $http, $q, $base64 ) {
 
 		angular.forEach ( entry.tags, function( v, k ) {
 
+			k = k.replace( '_', ':' ); // For subtags '_' need to be replaced with ':''
+
 			requestData += '<tag k="' + k + '" v="' + v + '"/>';
 
 		});

@@ -149,10 +149,7 @@ app.factory( 'olHandler', function() {
 
 				olObj.markers.userInput.addMarker( new OpenLayers.Marker( lonlat, olObj.markerIcon.userInput.clone() ) );
 
-				var fromProjection	= new OpenLayers.Projection( olObj.map.getProjection() );
-				var toProjection	= new OpenLayers.Projection( "EPSG:4326" );
-
-				$scope.olHandlerEntryClickCallback( lonlat.transform( fromProjection, toProjection ) );
+				$scope.olHandlerEntryClickCallback( lonlat );
 
 			}
 

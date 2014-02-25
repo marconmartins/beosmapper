@@ -28,7 +28,7 @@ app.controller( "MainController", function( $scope, $http, olHandler, osmData ) 
 	/**
 	 * User entry model
 	 **/
-	$scope.cleanEntry = {
+	$scope.entry = {
 		featureType: 'entrance', // Default value = entrance
 		tags: {
 			attribution: 'Created with Beosmapper'
@@ -41,7 +41,7 @@ app.controller( "MainController", function( $scope, $http, olHandler, osmData ) 
 		}
 	};
 
-	$scope.entry = $scope.cleanEntry;
+	//$scope.entry = $scope.cleanEntry;
 
 
 	/**
@@ -182,7 +182,6 @@ app.controller( "MainController", function( $scope, $http, olHandler, osmData ) 
 
 		$scope.entry.location = e;
 
-
 	};
 
 
@@ -191,11 +190,12 @@ app.controller( "MainController", function( $scope, $http, olHandler, osmData ) 
 	 **/
 	$scope.nextSection = function( e ) {
 
-		var activeSection = jQuery( '.collapse.in' );
+		var $activeSection = jQuery( '.panel-collapse.in' );
 
-		jQuery( '.collapse' ).removeClass( 'in' );
+		$activeSection.removeClass( 'in' );
+		$activeSection.addClass( 'collapse' );
 
-		jQuery( activeSection ).parent().nextAll( '.panel-default' ).find( '.collapse' ).eq(0).addClass( 'in' );
+		$activeSection.parent().nextAll( '.panel-default' ).find( '.panel-collapse' ).eq(0).addClass( 'in' );
 
 	};
 
@@ -203,7 +203,7 @@ app.controller( "MainController", function( $scope, $http, olHandler, osmData ) 
 	// Disable the submit if the required section are not set ( login + location + entrance type )
 	$scope.disableSubmit = function() {
 
-		if ( $scope.entry.login.username && $scope.entry.login.password && $scope.entry.location && $scope.entry.featureType ) { return false; }
+		if ( $scope.entry.featureType !== '' && $scope.entry.location !== '' && $scope.entry.login.username !== '' && $scope.entry.login.password !== '' ) { return false; }
 
 		return true;
 

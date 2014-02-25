@@ -143,13 +143,17 @@ app.factory( 'olHandler', function() {
 
 			trigger: function( e ) {
 
-				var lonlat = olObj.map.getLonLatFromViewPortPx( e.xy );
+				//var lonlat = ;
 
 				olObj.markers.userInput.clearMarkers();
 
-				olObj.markers.userInput.addMarker( new OpenLayers.Marker( lonlat, olObj.markerIcon.userInput.clone() ) );
 
-				$scope.olHandlerEntryClickCallback( lonlat );
+				olObj.markers.userInput.addMarker( new OpenLayers.Marker( olObj.map.getLonLatFromViewPortPx( e.xy ), olObj.markerIcon.userInput.clone() ) );
+
+				var fromProjection	= new OpenLayers.Projection( olObj.map.getProjection() );
+				var toProjection	= new OpenLayers.Projection( "EPSG:4326" );
+
+				$scope.olHandlerEntryClickCallback( olObj.map.getLonLatFromViewPortPx( e.xy ).transform( fromProjection, toProjection ) );
 
 			}
 

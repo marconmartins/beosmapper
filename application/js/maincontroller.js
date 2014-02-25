@@ -197,6 +197,7 @@ app.controller( "MainController", function( $scope, $http, olHandler, osmData ) 
 
 		$activeSection.parent().nextAll( '.panel-default' ).find( '.panel-collapse' ).eq(0).addClass( 'in' );
 
+		return true;
 	};
 
 

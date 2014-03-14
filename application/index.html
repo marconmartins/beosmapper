@@ -46,24 +46,34 @@
 
 		<div class="text-center">
 
-			<h2>Welcome to Beosmapper!</h2>
+			<h2>Beosmapper project</h2>
 
-			<h4>Beosmapper is an extension to <a href="http://blindsquare.com/" target="_blank">BlindSquare</a> that indicates the building entrances, stairs and traffic lights for blind pedestrians</h4>   
+			<h4>With this application you can add building entrances to <a href="http://www.openstreetmap.org/about" target="_blank">Open Street Maps</a> to assist people requiring special accessibility needs.</h4>   
 
 		</div>
 			
 	  <div id="submission-area" class="row">
 
-		<div id="map-block" class="col-md-8">
+		<div id="map-block" class="col-lg-8">
 
 			<div id="map"></div>
-
 			<a class="locate btn btn-primary btn-sm" href="" ng-click="locate()">Show my current location</a>
-
+			<div class="text-center">
+				<h5>Our project is based on the <a href="http://www.openstreetmap.org/about" target="_blank">OSM</a> crowdsourcing paradigm – it is an application for everyone to share information about their environment that others can use freely.
+				We do not store any of your data, we only help you to mark and describe the entrances, and submit them to OSM. </h5>
+			</div>
+			<hr>
+			<div class="text-center">
+				<h5>The project was inspired by <a href="http://blindsquare.com/" target="_blank">Blindsquare`s</a> need for entrance-location data, and it was built in the scope of the course GIS Application Development in <a href="http://www.aalto.fi/en/" target="_blank">Aalto University</a> by Aditya Raju, Anna Gorodetskaya, Kamyar Hasanzadeh, Marco Martins.
+				</h5>
+			</div>
 		</div>
 
 
-		<div id="information-block" class="col-md-4">
+		<div id="information-block" class="col-lg-4">
+			<div class="text-center">
+				<h4>It`s very easy to help – just follow the steps!</h4>
+			</div>
 
 			<div class="submission-result alert alert-success" ng-show="submission.success">
 				<p>Your entry was submitted. You can add more entries.</p>
@@ -280,9 +290,12 @@
 
 		</div>
 	</div>
-			<div class="well text-center">
-				<h6>This is a project by **Group 2** for the course GIS Application Development - Aalto University</h6>
+			<div class="text-center">
+				<h6>Your proposals and suggestions to improve the application are welcome here</h6>
 			
+			</div>
+			<div class="text-right">
+				<h6>2014,  Beosmapper</h6>	
 			</div>	
 	<!-- ng-model = two-way data binding 
 	<input type='text' ng-model='inputValue' />

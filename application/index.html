@@ -219,7 +219,10 @@
 							<!-- Address Information -->
 							<div class="form-group">
 
-								<label for="tag-addr_housenumber">Street <small>(<a href="http://wiki.openstreetmap.org/wiki/Key:addr:housenumber" target="_blank">see description</a>)</small></label>
+								<label for="tag-addr_street">Street <small>(<a href="http://wiki.openstreetmap.org/wiki/Key:addr:street" target="_blank">see description</a>)</small></label>
+								<input type="text" id="tag-addr_street" name="tag-addr_street" class="form-control has-error" placeholder="" ng-model='entry.tags.addr_street'>
+
+								<label for="tag-addr_housenumber">Number<small>(<a href="http://wiki.openstreetmap.org/wiki/Key:addr:housenumber" target="_blank">see description</a>)</small></label>
 								<input type="text" id="tag-addr_housenumber" name="tag-addr_housenumber" class="form-control has-error" placeholder="" ng-model='entry.tags.addr_housenumber'>
 
 								<label for="tag-addr_postcode">Postal Code <small>(<a href="http://wiki.openstreetmap.org/wiki/Key:addr:postcode" target="_blank">see description</a>)</small></label>

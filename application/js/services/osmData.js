@@ -21,9 +21,9 @@ app.factory( 'osmData', function( $http, $q, $base64 ) {
 	/**
 	 * Retrieves OSM Features
 	 *
-	 * @param	{object}	params	Object of key/value pairs => { tag:{k,v}, bbox:'' }
+	 * @param	object	params	Object of key/value pairs => { tag:{k,v}, bbox:'' }
 	 *
-	 * @returns	{object}	JSON object with OSM features
+	 * @returns	object	JSON object with OSM features
 	 */
 	osmData.getFeatures = function( params ) {
 

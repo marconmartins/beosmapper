@@ -14,7 +14,6 @@
 	<script type="text/javascript" src="js/lib/OpenLayers.js"></script>
 	<script type="text/javascript" src="js/lib/angular.min.js"></script>
 	<script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
-	<script src="//netdna.bootstrapcdn.com/bootstrap/3.0.3/js/bootstrap.min.js"></script>
 	<script type="text/javascript" src="js/lib/angular-base64.js"></script>
 
 	<!-- Application (controller + services) -->
@@ -43,261 +42,281 @@
 
 	<div class="container">
 
-		<div class="text-center">
+		<div id="site-heading">
 
-			<h2>Beosmapper project</h2>
+			<h2>Beosmapper Project</h2>
 
-			<h4>With this application you can add building entrances to <a href="http://www.openstreetmap.org/about" target="_blank">Open Street Map</a> to assist people requiring special accessibility needs.</h4>   
+			<p>With this application you can add building entrances to <a href="http://www.openstreetmap.org/about" target="_blank">Open Street Map</a> to assist people requiring special accessibility needs.</p>   
 
 		</div>
 			
 	  <div id="submission-area" class="row">
 
-		<div id="map-block" class="col-lg-8">
+	  	<ul class="nav nav-tabs">
+	  		<li class="active"><a href="#bulding-entrances" data-toggle="tab">Building Entrances</a></li>
+		</ul>
 
-			<div id="map"></div>
-			<a class="locate btn btn-primary btn-sm" href="" ng-click="locate()">Show my current location</a>
-			<div class="text-center">
-				<h5>Our project is based on the <a href="http://www.openstreetmap.org/about" target="_blank">OSM</a> crowdsourcing paradigm – it is an application for everyone to share information about their environment that others can use freely.
-				We do not store any of your data, we only help you to mark and describe the entrances, and submit them to OSM. </h5>
-			</div>
-			<hr>
-			<div class="text-center">
-				<h5>The project was inspired by <a href="http://blindsquare.com/" target="_blank">Blindsquare's</a> need for entrance-location data, and it was built in the scope of the course GIS Application Development in <a href="http://www.aalto.fi/en/" target="_blank">Aalto University</a> by Aditya Raju, Anna Gorodetskaya, Kamyar Hasanzadeh, Marco Martins.
-				</h5>
-			</div>
-		</div>
+		<div class="tab-content">
 
+			<div class="tab-pane active" id="bulding-entrances">
 
-		<div id="information-block" class="col-lg-4">
-			<div class="text-center">
-				<h4>It's very easy to help – just follow the steps!</h4>
-			</div>
-
-			<div class="submission-result alert alert-success" ng-show="submission.success">
-				<p>Your entry was submitted. You can add more entries.</p>
-			</div>
-
-			<div class="submission-result alert alert-danger" ng-show="submission.failure">Please, check all the steps carefully! Something is missing.</div>
-
-			<div class="panel-group" id="accordion">
-
-				<div class="panel panel-default">
-					<div class="panel-heading">
-				  		<h4 class="panel-title">
-							<a data-toggle="collapse" data-parent="#accordion" href="#collapseOne" ng-click="initAreaSelection();">1. Select area</a>
-						</h4>
-					</div>
-
-					<div id="collapseOne" class="panel-collapse collapse in">
-						<div class="panel-body">
-							Click on the map at the location where your object is situated and see which features already exist in that area.
-
-							<br><br><a class="btn btn-default pull-right" href="" role="button" ng-click="nextSection( $event ); selectFeatureType();">Next</a>
-						</div>
-					</div>
+				<div class="submission-result alert alert-success" ng-show="submission.success">
+					<p>Your entry was submitted. You can add more entries.</p>
 				</div>
 
-				<div class="panel panel-default">
-					<div class="panel-heading">
-						<h4 class="panel-title">
-							<a data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" ng-click="selectFeatureType();">2. What do you want add?</a> <span class="is-required">*</span>
-						</h4>
-					</div>
+				<div class="submission-result alert alert-danger" ng-show="submission.failure">Please, check all the steps carefully! Something is missing.</div>
 
-					<div id="collapseTwo" class="panel-collapse collapse">
-						<div class="panel-body">
+				<div id="map-block" class="col-sm-8">
 
-							<div class="form-group">
+					<div id="map"></div>
 
-								<select id="feature-type" class="form-control" ng-model='entry.featureType'>
+					<a class="locate btn btn-primary btn-sm" href="" ng-click="locate()">Show my current location</a>
 
-									<option value="entrance" selected>Building Entrance</option>
-
-								</select>
-
-								<br><br><a class="btn btn-default pull-right" href="" role="button" ng-click="nextSection( $event ); selectLocation();">Next</a>
-							</div>
-						</div>
-					</div>
 				</div>
 
+				<div id="information-block" class="col-sm-4">
 
-				<div class="panel panel-default">
-					<div class="panel-heading">
-						<h4 class="panel-title">
-							<a data-toggle="collapse" data-parent="#accordion" href="#collapseThree" ng-click="selectLocation();">3. Select location</a> <span class="is-required">*</span>
-				  		</h4>
+					<div class="text-center hidden-xs">
+						<h5>It's very easy to help – just follow the steps!</h5>
 					</div>
 
-					<div id="collapseThree" class="panel-collapse collapse">
-						<div class="panel-body">
-							Click one more time on the exact location of your entrance/traffic lights.
+					<div class="panel-group" id="accordion">
 
-							<br><br><a class="btn btn-default pull-right" href="" role="button" ng-click="nextSection( $event )">Next</a>
-						</div>
-					</div>
-				</div>
-
-				<div class="panel panel-default">
-					<div class="panel-heading">
-						<h4 class="panel-title">
-							<a data-toggle="collapse" data-parent="#accordion" href="#collapseFour">4. Describe</a>
-						</h4>
-					</div>
-
-					<div id="collapseFour" class="panel-collapse collapse">
-						<div class="panel-body">
-
-							<!-- Entrance -->
-							<div class="form-group">
-								<label for="tag-entrance">Importance or type of use <small>(<a href="http://wiki.openstreetmap.org/wiki/Key:entrance" target="_blank">see description</a>)</small></label>
-
-								<select id="tag-entrance" name="tag-entrance" class="form-control has-error" ng-model='entry.tags.entrance'>
-
-									<option value="yes" selected> Normal</option>
-
-									<option value="main">Main</option>
-
-									<option value="service">Service</option>
-
-									<option value="exit">Exit</option>
-
-									<option value="emergency">Emergency</option>
-
-									<option value="staircase">Staircase</option>
-
-									<option value="home">Home</option>
-
-								</select>
-
+						<div class="panel panel-default">
+							<div class="panel-heading">
+						  		<h4 class="panel-title">
+									<a data-toggle="collapse" data-parent="#accordion" href="#collapseOne" ng-click="initAreaSelection();">1. Select area</a>
+								</h4>
 							</div>
 
-							<!-- Access -->
-							<div class="form-group">
+							<div id="collapseOne" class="panel-collapse collapse in">
+								<div class="panel-body">
+									Click on the map at the location where your object is situated and see which features already exist in that area.
 
-								<label for="tag-access">Allowed to enter <small>(<a href="http://wiki.openstreetmap.org/wiki/Key:access" target="_blank">see description</a>)</small></label>
-
-								<select id="tag-access" name="tag-access" class="form-control has-error" ng-model='entry.tags.access'>
-
-									<option value="yes" selected>Yes</option>
-
-									<option value="delivery">Delivery</option>
-
-									<option value="private">Private</option>
-
-									<option value="no">No</option>
-
-								</select>
-
-							</div>
-
-							<!-- Access -->
-							<div class="form-group">
-
-								<label for="tag-wheelchair">Wheelchair access <small>(<a href="http://wiki.openstreetmap.org/wiki/Key:wheelchair" target="_blank">see description</a>)</small></label>
-
-								<select id="tag-wheelchair" name="tag-wheelchair" class="form-control has-error" ng-model='entry.tags.wheelchair'>
-
-									<option value="yes" selected>Yes</option>
-
-									<option value="no">No</option>
-
-									<option value="limited">Limited</option>
-
-								</select>
-
-							</div>
-
-							<!-- Automatic doors -->
-							<div class="form-group">
-								<div class="checkbox">
-									<label><input type="checkbox" value="" ng-model='entry.tags.automatic_door' ng-true-value="yes" ng-false-value="no">Automatic doors <small>(<a href="http://wiki.openstreetmap.org/wiki/Key:automatic_door" target="_blank">see description</a>)</small></label>
+									<br><br><a class="btn btn-default pull-right" href="" role="button" ng-click="nextSection( $event ); selectFeatureType();">Next</a>
 								</div>
 							</div>
+						</div>
 
-							<!-- Address Information -->
-							<div class="form-group">
-
-								<label for="tag-addr_street">Street <small>(<a href="http://wiki.openstreetmap.org/wiki/Key:addr:street" target="_blank">see description</a>)</small></label>
-								<input type="text" id="tag-addr_street" name="tag-addr_street" class="form-control has-error" placeholder="" ng-model='entry.tags.addr_street'>
-
-								<label for="tag-addr_housenumber">Number<small>(<a href="http://wiki.openstreetmap.org/wiki/Key:addr:housenumber" target="_blank">see description</a>)</small></label>
-								<input type="text" id="tag-addr_housenumber" name="tag-addr_housenumber" class="form-control has-error" placeholder="" ng-model='entry.tags.addr_housenumber'>
-
-								<label for="tag-addr_postcode">Postal Code <small>(<a href="http://wiki.openstreetmap.org/wiki/Key:addr:postcode" target="_blank">see description</a>)</small></label>
-								<input type="text" id="tag-addr_postcode" name="tag-addr_postcode" class="form-control has-error" placeholder="" ng-model='entry.tags.addr_postcode'>
-
-								<label for="tag-addr_city">City <small>(<a href="http://wiki.openstreetmap.org/wiki/Key:addr:city" target="_blank">see description</a>)</small></label>
-								<input type="text" id="tag-addr_city" name="tag-addr_city" class="form-control has-error" placeholder="" ng-model='entry.tags.addr_city'>
-
-								<label for="tag-addr_state">State <small>(<a href="http://wiki.openstreetmap.org/wiki/Key:addr:state" target="_blank">see description</a>)</small></label>
-								<input type="text" id="tag-addr_state" name="tag-addr_state" class="form-control has-error" placeholder="" ng-model='entry.tags.addr_state'>
-
-								<label for="tag-addr_country">Country <small>(<a href="http://wiki.openstreetmap.org/wiki/Key:addr:country" target="_blank">see description</a>)</small></label>
-								<input type="text" id="tag-addr_country" name="tag-addr_country" class="form-control has-error" placeholder="" ng-model='entry.tags.addr_country'>
-
+						<!-- <div class="panel panel-default">
+							<div class="panel-heading">
+								<h4 class="panel-title">
+									<a data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" ng-click="selectFeatureType();">2. What do you want add?</a> <span class="is-required">*</span>
+								</h4>
 							</div>
 
-							
-							<div class="form-group">
+							<div id="collapseTwo" class="panel-collapse collapse">
+								<div class="panel-body">
 
-								<label for="tag-ref">Entrance Reference <small>(<a href="http://wiki.openstreetmap.org/wiki/Key:ref" target="_blank">see description</a>)</small></label>
+									<div class="form-group">
 
-								<input type="text" id="tag-ref" name="tag-ref" class="form-control has-error" placeholder="example: A" ng-model='entry.ref' >
+										<select id="feature-type" class="form-control" ng-model='entry.featureType'>
 
+											<option value="entrance" selected>Building Entrance</option>
+
+										</select>
+
+										<br><br><a class="btn btn-default pull-right" href="" role="button" ng-click="nextSection( $event ); selectLocation();">Next</a>
+									</div>
+								</div>
+							</div>
+						</div> -->
+
+
+						<!-- <div class="panel panel-default">
+							<div class="panel-heading">
+								<h4 class="panel-title">
+									<a data-toggle="collapse" data-parent="#accordion" href="#collapseThree" ng-click="selectLocation();">3. Select location</a> <span class="is-required">*</span>
+						  		</h4>
 							</div>
 
+							<div id="collapseThree" class="panel-collapse collapse">
+								<div class="panel-body">
+									Click one more time on the exact location of your entrance/traffic lights.
 
-							<br><br><a class="btn btn-default pull-right" href="" role="button" ng-click="nextSection( $event )">Next</a>
+									<br><br><a class="btn btn-default pull-right" href="" role="button" ng-click="nextSection( $event )">Next</a>
+								</div>
+							</div>
+						</div> -->
+
+						<div class="panel panel-default">
+							<div class="panel-heading">
+								<h4 class="panel-title">
+									<a data-toggle="collapse" data-parent="#accordion" href="#collapseFour">2. Describe</a>
+								</h4>
+							</div>
+
+							<div id="collapseFour" class="panel-collapse collapse">
+								<div class="panel-body">
+
+									<h4>Accessibility Information</h4>
+
+									<!-- Entrance -->
+									<div class="form-group">
+										<label for="tag-entrance">Importance or type of use <small>(<a href="http://wiki.openstreetmap.org/wiki/Key:entrance" target="_blank">see description</a>)</small></label>
+
+										<select id="tag-entrance" name="tag-entrance" class="form-control has-error" ng-model='entry.tags.entrance'>
+
+											<option value="yes" selected> Normal</option>
+
+											<option value="main">Main</option>
+
+											<option value="service">Service</option>
+
+											<option value="exit">Exit</option>
+
+											<option value="emergency">Emergency</option>
+
+											<option value="staircase">Staircase</option>
+
+											<option value="home">Home</option>
+
+										</select>
+
+									</div>
+
+									<!-- Access -->
+									<div class="form-group">
+
+										<label for="tag-access">Allowed to enter <small>(<a href="http://wiki.openstreetmap.org/wiki/Key:access" target="_blank">see description</a>)</small></label>
+
+										<select id="tag-access" name="tag-access" class="form-control has-error" ng-model='entry.tags.access'>
+
+											<option value="yes" selected>Yes</option>
+
+											<option value="delivery">Delivery</option>
+
+											<option value="private">Private</option>
+
+											<option value="no">No</option>
+
+										</select>
+
+									</div>
+
+									<!-- Access -->
+									<div class="form-group">
+
+										<label for="tag-wheelchair">Wheelchair access <small>(<a href="http://wiki.openstreetmap.org/wiki/Key:wheelchair" target="_blank">see description</a>)</small></label>
+
+										<select id="tag-wheelchair" name="tag-wheelchair" class="form-control has-error" ng-model='entry.tags.wheelchair'>
+
+											<option value="yes" selected>Yes</option>
+
+											<option value="no">No</option>
+
+											<option value="limited">Limited</option>
+
+										</select>
+
+									</div>
+
+									<!-- Automatic doors -->
+									<div class="form-group">
+										<div class="checkbox">
+											<label><input type="checkbox" value="" ng-model='entry.tags.automatic_door' ng-true-value="yes" ng-false-value="no">Automatic doors <small>(<a href="http://wiki.openstreetmap.org/wiki/Key:automatic_door" target="_blank">see description</a>)</small></label>
+										</div>
+									</div>
+
+									<!-- Address Information -->
+									<div class="form-group">
+										<h4>Address Information</h4>
+
+										<label for="tag-addr_street">Street <small>(<a href="http://wiki.openstreetmap.org/wiki/Key:addr:street" target="_blank">see description</a>)</small></label>
+										<input type="text" id="tag-addr_street" name="tag-addr_street" class="form-control has-error" placeholder="" ng-model='entry.tags.addr_street'>
+
+										<label for="tag-addr_housenumber">Number<small>(<a href="http://wiki.openstreetmap.org/wiki/Key:addr:housenumber" target="_blank">see description</a>)</small></label>
+										<input type="text" id="tag-addr_housenumber" name="tag-addr_housenumber" class="form-control has-error" placeholder="" ng-model='entry.tags.addr_housenumber'>
+
+										<label for="tag-addr_postcode">Postal Code <small>(<a href="http://wiki.openstreetmap.org/wiki/Key:addr:postcode" target="_blank">see description</a>)</small></label>
+										<input type="text" id="tag-addr_postcode" name="tag-addr_postcode" class="form-control has-error" placeholder="" ng-model='entry.tags.addr_postcode'>
+
+										<label for="tag-addr_city">City <small>(<a href="http://wiki.openstreetmap.org/wiki/Key:addr:city" target="_blank">see description</a>)</small></label>
+										<input type="text" id="tag-addr_city" name="tag-addr_city" class="form-control has-error" placeholder="" ng-model='entry.tags.addr_city'>
+
+										<label for="tag-addr_state">State <small>(<a href="http://wiki.openstreetmap.org/wiki/Key:addr:state" target="_blank">see description</a>)</small></label>
+										<input type="text" id="tag-addr_state" name="tag-addr_state" class="form-control has-error" placeholder="" ng-model='entry.tags.addr_state'>
+
+										<label for="tag-addr_country">Country <small>(<a href="http://wiki.openstreetmap.org/wiki/Key:addr:country" target="_blank">see description</a>)</small></label>
+										<input type="text" id="tag-addr_country" name="tag-addr_country" class="form-control has-error" placeholder="" ng-model='entry.tags.addr_country'>
+
+									</div>
+
+									
+									<div class="form-group">
+
+										<label for="tag-ref">Entrance Reference <small>(<a href="http://wiki.openstreetmap.org/wiki/Key:ref" target="_blank">see description</a>)</small></label>
+
+										<input type="text" id="tag-ref" name="tag-ref" class="form-control has-error" placeholder="example: A" ng-model='entry.ref' >
+
+									</div>
+
+
+									<br><br><a class="btn btn-default pull-right" href="" role="button" ng-click="nextSection( $event )">Next</a>
+								</div>
+							</div>
+						</div>
+
+						<div class="panel panel-default">
+							<div class="panel-heading">
+								<h4 class="panel-title">
+									<a data-toggle="collapse" data-parent="#accordion" href="#collapseFive">3. Add your OpenStreetMap login</a> <span class="is-required">*</span>
+								</h4>
+							</div>
+
+							<div id="collapseFive" class="panel-collapse collapse">
+								<div class="panel-body">
+									<div class="form-group" ng-class="submission.failAuth">
+
+										<p class="text-muted"><small><small>Don't have a OpenStreetMap account? Sign up <a href="https://www.openstreetmap.org/user/new" target="_blank">here</a>.</small></small></p>
+
+										<label class="sr-only" for="osm_password">OpenStreetMap Username</label>
+										<input type="text" id="username" class="form-control" placeholder="Username" ng-model='entry.login.username'><p></p>
+
+										<label class="sr-only" for="osm_password">OpenStreetMap Password</label>
+										<input type="password" id="osm_password" class="form-control" placeholder="Password" ng-model='entry.login.password'>
+
+										<p class="text-info"><small><small>Note: Your OpenStreetMap login information will not be stored, it will be used only to submit the data.</small></small></p>
+
+									</div>
+								</div>
+							</div>
 						</div>
 					</div>
-				</div>
+					<p class="text-muted"><span class="is-required">*</span> <small>Required section</small></p>
 
-				<div class="panel panel-default">
-					<div class="panel-heading">
-						<h4 class="panel-title">
-							<a data-toggle="collapse" data-parent="#accordion" href="#collapseFive">5. Add your OpenStreetMap login</a> <span class="is-required">*</span>
-						</h4>
-					</div>
+					<div class="input-group pull-right">
 
-					<div id="collapseFive" class="panel-collapse collapse">
-						<div class="panel-body">
-							<div class="form-group" ng-class="submission.failAuth">
+						<button type="submit" class="btn btn-default" ng-disabled='disableSubmit()' ng-click='submitEntry()'>Submit</button>
 
-								<p class="text-muted"><small><small>Don't have a OpenStreetMap account? Sign up <a href="https://www.openstreetmap.org/user/new" target="_blank">here</a>.</small></small></p>
-
-								<label class="sr-only" for="osm_password">OpenStreetMap Username</label>
-								<input type="text" id="username" class="form-control" placeholder="Username" ng-model='entry.login.username'><p></p>
-
-								<label class="sr-only" for="osm_password">OpenStreetMap Password</label>
-								<input type="password" id="osm_password" class="form-control" placeholder="Password" ng-model='entry.login.password'>
-
-								<p class="text-info"><small><small>Note: Your OpenStreetMap login information will not be stored, it will be used only to submit the data.</small></small></p>
-
-							</div>
-						</div>
 					</div>
 				</div>
-			</div>
-			<p class="text-muted"><span class="is-required">*</span> <small>Required section</small></p>
-
-			<div class="input-group pull-right">
-
-				<button type="submit" class="btn btn-default" ng-disabled='disableSubmit()' ng-click='submitEntry()'>Submit</button>
 
 			</div>
 
 		</div>
+
+
+
 	</div>
 
-	<div class="text-center">
-		<h6>Your proposals and suggestions to improve the application are welcome here</h6>			
+	<div class="about-text col-sm-8">
+
+		<h3>About this project</h3>
+
+		<p>Our project is based on the <a href="http://www.openstreetmap.org/about" target="_blank">OSM</a> crowdsourcing paradigm – it is an application for everyone to share information about their environment that others can use freely. We do not store any of your data, we only help you to mark and describe the entrances, and submit them to OSM. </p>
+
+		<p>The project was inspired by <a href="http://blindsquare.com/" target="_blank">Blindsquare's</a> need for entrance-location data, and it was built in the scope of the course GIS Application Development in <a href="http://www.aalto.fi/en/" target="_blank">Aalto University</a> by Aditya Raju, Anna Gorodetskaya, Kamyar Hasanzadeh and Marco Martins.</p>
+		</p>
+
+		<p>Your suggestions to improve the application are welcome, <a href="">[add email address].</a></p>
+
+		<!-- <div class="text-right">
+			<h6>2014, Beosmapper</h6>	
+		</div> -->
 	</div>
 
-	<div class="text-right">
-		<h6>2014,  Beosmapper</h6>	
-	</div>	
+	<script src="//netdna.bootstrapcdn.com/bootstrap/3.0.3/js/bootstrap.min.js"></script>
 
 </body>
 </html>

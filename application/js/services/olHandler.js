@@ -1,5 +1,6 @@
 app.factory( 'olHandler', function() {
 
+
 	/**
 	 * OpenLayers handler default settings
 	 */
@@ -53,12 +54,13 @@ app.factory( 'olHandler', function() {
 		olObj.map.setCenter( new OpenLayers.LonLat( 2777592, 8437735 ), olObj.zoom );
 
 		// Set marker icons
-		var size = new OpenLayers.Size( 20, 25 );
+		var size = new OpenLayers.Size( 15, 15 );
 		var offset = new OpenLayers.Pixel( -( size.w / 2 ), -size.h );
 		olObj.markerIcon.features = new OpenLayers.Icon( '../img/entgreen.png', size, offset );
 		olObj.markerIcon.userInput = new OpenLayers.Icon( '../img/entpink.png', size, offset );
 
 	};
+
 
 	/**
 	 * Initialize user click
@@ -96,7 +98,12 @@ app.factory( 'olHandler', function() {
 
 				olObj.markers.userInput.addMarker( new OpenLayers.Marker( lonlat, olObj.markerIcon.userInput.clone() ) );
 
-				$scope.olHandlerAreaSelectionClickCallback( lonlat ); // Returns the lonlat click object
+				var fromProjection	= new OpenLayers.Projection( olObj.map.getProjection() );
+				var toProjection	= new OpenLayers.Projection( "EPSG:4326" );
+
+				var lonlatWSG84 = olObj.map.getLonLatFromViewPortPx( e.xy ).transform( fromProjection, toProjection );
+
+				$scope.olHandlerAreaSelectionClickCallback( lonlat, lonlatWSG84 ); // Returns the lonlat click object
 
 			}
 
@@ -173,17 +180,15 @@ app.factory( 'olHandler', function() {
 	olHandler.enableClickEvent = function( eventName ) {
 
 		if ( eventName == 'entry' ) {
-
 			entryClick.activate();
-
 		}
 
 		if ( eventName == 'area-selection' ) {
-
 			areaSelectionClick.activate();
-
 		}
+	
 	};
+
 
 	/**
 	 * Disable click events
@@ -206,10 +211,6 @@ app.factory( 'olHandler', function() {
 
 	};
 
-
-
-
-	
 
 
 	/**
@@ -331,21 +332,5 @@ app.factory( 'olHandler', function() {
 
 	return olHandler;
 });
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 

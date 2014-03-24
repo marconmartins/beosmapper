@@ -41,7 +41,6 @@ app.controller( "MainController", function( $scope, $http, olHandler, osmData ) 
 		}
 	};
 
-	//$scope.entry = $scope.cleanEntry;
 
 
 	/**
@@ -98,7 +97,8 @@ app.controller( "MainController", function( $scope, $http, olHandler, osmData ) 
 				$scope.entry = {
 					featureType: 'entrance',
 					tags: {
-						attribution: 'Created with Beosmapper'
+						attribution: 'Created with Beosmapper',
+						building: 'entrance'
 					},
 					description: '',
 					location: '',
@@ -146,11 +146,12 @@ app.controller( "MainController", function( $scope, $http, olHandler, osmData ) 
 	 * @param object	lonlat	OpenLayers Latitude/Longitude object with the user area click location
 	 *
 	 **/
-	$scope.olHandlerAreaSelectionClickCallback = function( lonlat ) {
+	$scope.olHandlerAreaSelectionClickCallback = function( lonlat, wsg84LonLat ) {
 
 		olHandler.clearOSMFeaturesMarkers();
 
 		$scope.entry.areaLocation = lonlat;
+		$scope.entry.location = wsg84LonLat;
 
 		var boundingBox = olHandler.createBboxFromLonLat( lonlat ); // Gets the bbox polygon
 
